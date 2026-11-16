@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Events, Orientations & Workshops | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Events & Activities</li>
+    </ol>
+  </nav>
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div class="section-header-academic mb-0">
+      <span class="badge-kicker"><i class="bi bi-calendar-check me-1"></i> Academic Life</span>
+      <h2>Library Events, Orientations & Workshops</h2>
+      <p>Orientation programs, digital library training sessions, national book week exhibitions, and seminars.</p>
+    </div>
+    <a href="{% url 'events:gallery_list' %}" class="btn btn-outline-success fw-semibold mt-2 mt-md-0">
+      <i class="bi bi-images me-1"></i> View Photo Gallery
+    </a>
+  </div>
+
+  <div class="row g-4 mb-4">
+    {% for ev in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden d-flex flex-column">
+          <div class="p-4 bg-navy text-white" style="background-color: var(--lib-navy);">
+            <span class="badge bg-warning text-dark fw-bold mb-2">{{ ev.get_event_type_display }}</span>
+            <h5 class="fw-bold text-white mb-2">{{ ev.title }}</h5>
+            <div class="small text-white-50"><i class="bi bi-calendar3 me-1"></i>{{ ev.start_date|date:"F d, Y" }}</div>
+          </div>
+          <div class="card-body p-4 d-flex flex-column flex-grow-1">
+            <p class="text-secondary small mb-3 flex-grow-1">{{ ev.summary }}</p>
+            <div class="bg-light p-2 rounded-2 small text-muted mb-3">
+              <i class="bi bi-geo-alt-fill text-danger me-1"></i> <strong>Venue:</strong> {{ ev.venue }}
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+              <a href="{{ ev.get_absolute_url }}" class="btn btn-primary btn-sm fw-semibold w-100">
+                View Event Coverage &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center py-5">
+        <p class="text-muted">No scheduled events at this time.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

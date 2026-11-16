@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}BTEUP Diploma Curriculum & Syllabus | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'resources:resource_list' %}">Resources</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Curriculum & Syllabus</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-card-checklist me-1"></i> BTEUP Curriculum</span>
+    <h2>Diploma Curriculum & Semester Syllabus</h2>
+    <p>Official Board of Technical Education Uttar Pradesh approved teaching schemes, examination marks distribution, and syllabus copies.</p>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-3 p-4 mb-4 bg-white">
+    <form action="{% url 'resources:syllabus' %}" method="get" class="row g-3 align-items-end">
+      <div class="col-md-9">
+        <label for="deptSelect" class="form-label small fw-bold text-muted">Select Engineering Branch</label>
+        <select name="department" id="deptSelect" class="form-select">
+          <option value="">All Engineering Disciplines</option>
+          {% for d in departments %}
+            <option value="{{ d.id }}" {% if selected_dept == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }} ({{ d.code }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3 d-grid">
+        <button type="submit" class="btn btn-primary fw-semibold py-2">Filter Syllabus</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="row g-4">
+    {% for item in syllabus_items %}
+      <div class="col-md-6">
+        <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="quick-action-icon m-0"><i class="bi bi-journal-code"></i></div>
+            <div>
+              <h5 class="fw-bold mb-0 text-dark">{{ item.title }}</h5>
+              <span class="badge bg-secondary-subtle text-secondary">{{ item.department.name|default:"General" }}</span>
+            </div>
+          </div>
+          <p class="text-muted small mb-3">{{ item.description }}</p>
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+            <span class="small text-muted"><i class="bi bi-clock me-1"></i>Session: {{ item.academic_year|default:"Approved" }}</span>
+            <a href="{% url 'resources:download' slug=item.slug %}" class="btn btn-sm btn-success fw-semibold" target="_blank">
+              <i class="bi bi-download me-1"></i> Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center py-5">
+        <p class="text-muted">No syllabus records found.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

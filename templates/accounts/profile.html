@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Profile | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+        <h4 class="fw-bold mb-3"><i class="bi bi-person-circle text-primary me-2"></i>Staff Profile</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm small">
+            <tbody>
+              <tr><th class="w-25 bg-light">Username</th><td>{{ user.username }}</td></tr>
+              <tr><th class="bg-light">Full Name</th><td>{{ user.get_full_name|default:"Not configured" }}</td></tr>
+              <tr><th class="bg-light">Email Address</th><td>{{ user.email }}</td></tr>
+              <tr>
+                <th class="bg-light">Library Role</th>
+                <td>
+                  <span class="badge bg-primary">
+                    {% if user.is_superuser %}
+                      Super Administrator
+                    {% elif user.staff_profile %}
+                      {{ user.staff_profile.get_role_display }}
+                    {% else %}
+                      Staff Member
+                    {% endif %}
+                  </span>
+                </td>
+              </tr>
+              <tr><th class="bg-light">Last Login</th><td>{{ user.last_login|default:"Current Session" }}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+          <a href="{% url 'dashboard:overview' %}" class="btn btn-outline-primary btn-sm"><i class="bi bi-speedometer2 me-1"></i> Go to Dashboard</a>
+          <a href="{% url 'accounts:logout' %}" class="btn btn-danger btn-sm"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

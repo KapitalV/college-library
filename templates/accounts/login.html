@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff & Librarian Login | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-0 shadow-lg rounded-3 overflow-hidden bg-white">
+        <div class="p-4 bg-navy text-white text-center" style="background-color: var(--lib-navy);">
+          <div class="mx-auto mb-2 text-warning fs-1"><i class="bi bi-shield-lock-fill"></i></div>
+          <h4 class="fw-bold mb-1 text-white">Staff Management Portal</h4>
+          <p class="small text-white-50 mb-0">Authorized Librarians & Content Editors Only</p>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger py-2 small mb-3">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark">Staff Username / ID</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                {{ form.username }}
+              </div>
+              {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.errors }}</div>{% endif %}
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-dark">Password</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>
+                {{ form.password }}
+              </div>
+              {% if form.password.errors %}<div class="text-danger small mt-1">{{ form.password.errors }}</div>{% endif %}
+            </div>
+
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Log In to Dashboard
+              </button>
+            </div>
+          </form>
+
+          <div class="p-3 bg-light rounded-3 text-center small text-muted">
+            <i class="bi bi-info-circle me-1"></i> Students do not require login to search the OPAC catalogue, download question papers, or read syllabus documents.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

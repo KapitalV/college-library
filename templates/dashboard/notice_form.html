@@ -1,0 +1,85 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}{{ title }} | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">{{ title }}</h1>
+    <div class="text-muted small">Draft or publish institutional notices and circulars.</div>
+  </div>
+  <a href="{% url 'dashboard:notice_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i> Back to Notices
+  </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label small fw-bold">Notice Title *</label>
+        {{ form.title }}
+        {% if form.title.errors %}<div class="text-danger small">{{ form.title.errors }}</div>{% endif %}
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Category *</label>
+        {{ form.category }}
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Priority Level *</label>
+        {{ form.priority }}
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Publish Date *</label>
+        {{ form.publish_date }}
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Expiration Date</label>
+        {{ form.expiry_date }}
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Short Summary (1-2 lines for homepage preview)</label>
+        {{ form.short_summary }}
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Full Notice Content *</label>
+        {{ form.content }}
+        {% if form.content.errors %}<div class="text-danger small">{{ form.content.errors }}</div>{% endif %}
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Attach Official PDF Circular</label>
+        {{ form.attachment }}
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-check mt-4">
+          {{ form.is_pinned }}
+          <label class="form-check-label small fw-bold" for="{{ form.is_pinned.id_for_label }}">Pin to Top Announcement Ticker</label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-check mt-4">
+          {{ form.is_active }}
+          <label class="form-check-label small fw-bold" for="{{ form.is_active.id_for_label }}">Active & Published</label>
+        </div>
+      </div>
+
+      <div class="col-12 pt-3 border-top d-flex justify-content-between">
+        <a href="{% url 'dashboard:notice_list' %}" class="btn btn-outline-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary fw-bold px-4">Publish Notice</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

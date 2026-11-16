@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }} by {{ book.author }} | GP Madhogarh OPAC Catalogue{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'catalog:search' %}">Catalogue</a></li>
+      {% if book.department %}
+        <li class="breadcrumb-item"><a href="{{ book.department.get_absolute_url }}">{{ book.department.code }}</a></li>
+      {% endif %}
+      <li class="breadcrumb-item active text-truncate" aria-current="page">{{ book.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-5">
+    <div class="card-body p-4 p-md-5">
+      <div class="row g-4">
+        <!-- Book Cover / Callout -->
+        <div class="col-md-4 col-lg-3 text-center">
+          <div class="book-cover-placeholder rounded-3 shadow" style="height: 280px;">
+            <i class="bi bi-book-half" style="font-size: 4rem; color: var(--lib-gold);"></i>
+            <div class="fs-6 fw-bold mt-3 px-2">{{ book.title }}</div>
+            {% if book.is_donated %}
+              <div class="badge bg-danger mt-2"><i class="bi bi-heart-fill"></i> Faculty Donation</div>
+            {% endif %}
+          </div>
+          
+          <div class="mt-3">
+            {% if book.is_available %}
+              <div class="alert alert-success py-2 small fw-bold mb-2">
+                <i class="bi bi-check-circle-fill me-1"></i> Available in Library ({{ book.available_copies }}/{{ book.total_copies }})
+              </div>
+            {% else %}
+              <div class="alert alert-danger py-2 small fw-bold mb-2">
+                <i class="bi bi-x-circle-fill me-1"></i> All Copies Issued Out
+              </div>
+            {% endif %}
+            <button type="button" class="btn btn-outline-secondary btn-sm w-100 js-btn-print">
+              <i class="bi bi-printer me-1"></i> Print Slip
+            </button>
+          </div>
+        </div>
+
+        <!-- Bibliographic Metadata -->
+        <div class="col-md-8 col-lg-9">
+          <div class="d-flex flex-wrap gap-2 mb-2">
+            <span class="badge bg-primary-subtle text-primary fw-semibold">{{ book.category.name|default:"General Book" }}</span>
+            {% if book.department %}
+              <span class="badge bg-secondary-subtle text-secondary fw-semibold">{{ book.department.name }}</span>
+            {% endif %}
+            <span class="badge bg-light text-dark border">{{ book.language }}</span>
+          </div>
+
+          <h2 class="fw-bold text-dark mb-1">{{ book.title }}</h2>
+          {% if book.subtitle %}
+            <h5 class="text-secondary fw-normal mb-3">{{ book.subtitle }}</h5>
+          {% endif %}
+
+          <div class="fs-5 text-muted mb-4">
+            by <strong class="text-dark">{{ book.author }}</strong>
+            {% if book.co_authors %}<span class="small">; with {{ book.co_authors }}</span>{% endif %}
+          </div>
+
+          <div class="table-responsive mb-4">
+            <table class="table table-bordered table-sm small mb-0">
+              <tbody>
+                <tr>
+                  <th class="bg-light w-25">ISBN</th>
+                  <td>{{ book.isbn|default:"Not Available" }}</td>
+                  <th class="bg-light w-25">Call / DDC Number</th>
+                  <td><code>{{ book.classification_number|default:"N/A" }}</code></td>
+                </tr>
+                <tr>
+                  <th class="bg-light">Publisher</th>
+                  <td>{{ book.publisher|default:"Institutional Press" }}</td>
+                  <th class="bg-light">Edition</th>
+                  <td>{{ book.edition|default:"Standard Edition" }}</td>
+                </tr>
+                <tr>
+                  <th class="bg-light">Publication Year</th>
+                  <td>{{ book.publication_year|default:"N/A" }}</td>
+                  <th class="bg-light">Pages</th>
+                  <td>{{ book.pages|default:"N/A" }}</td>
+                </tr>
+                {% if book.is_donated and book.donor_name %}
+                <tr>
+                  <th class="bg-light text-danger"><i class="bi bi-heart-fill me-1"></i>Donated By</th>
+                  <td colspan="3" class="text-danger fw-bold">{{ book.donor_name }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+
+          {% if book.description %}
+            <div class="mb-4">
+              <h6 class="fw-bold text-dark">Description & Syllabus Relevance:</h6>
+              <p class="text-secondary small">{{ book.description }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Physical Inventory / Copy Records -->
+      <div class="mt-5 pt-4 border-top">
+        <h5 class="fw-bold text-dark mb-3">
+          <i class="bi bi-collection-fill text-primary me-2"></i>Physical Copy Inventory & Shelf Locations ({{ copies.count }})
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-academic table-hover">
+            <thead>
+              <tr>
+                <th>Accession Number</th>
+                <th>Physical Shelf Location</th>
+                <th>Status</th>
+                <th>Collection Type</th>
+                <th>Action / Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for copy in copies %}
+                <tr>
+                  <td><strong><code>{{ copy.accession_number }}</code></strong></td>
+                  <td><i class="bi bi-geo-alt text-danger me-1"></i>{{ copy.shelf_location }}</td>
+                  <td>
+                    {% if copy.status == 'AVAILABLE' %}
+                      <span class="badge bg-success-subtle text-success fw-bold">Available on Shelf</span>
+                    {% elif copy.status == 'ISSUED' %}
+                      <span class="badge bg-danger-subtle text-danger fw-bold">Issued</span>
+                    {% elif copy.status == 'REFERENCE_ONLY' %}
+                      <span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Reference Only (In-Hall)</span>
+                    {% else %}
+                      <span class="badge bg-secondary">{{ copy.get_status_display }}</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ book.category.name|default:"General Stack" }}</td>
+                  <td class="small text-muted">
+                    {% if copy.status == 'AVAILABLE' %}
+                      Present student card at circulation desk
+                    {% elif copy.status == 'REFERENCE_ONLY' %}
+                      Consult in central reading hall
+                    {% else %}
+                      Contact counter for reservation
+                    {% endif %}
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center py-3 text-muted">No physical accession copies recorded yet.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Titles -->
+  {% if related_books %}
+    <div class="mt-5">
+      <h5 class="fw-bold text-dark mb-3"><i class="bi bi-bookmarks me-2 text-primary"></i>Related Academic Books</h5>
+      <div class="row g-3">
+        {% for rb in related_books %}
+          <div class="col-md-3 col-sm-6">
+            <div class="card-book h-100">
+              <div class="card-book-body">
+                <span class="badge bg-light text-dark border mb-1 align-self-start">{{ rb.department.code|default:"General" }}</span>
+                <a href="{{ rb.get_absolute_url }}" class="text-decoration-none">
+                  <h6 class="book-card-title">{{ rb.title }}</h6>
+                </a>
+                <div class="book-card-author small"><i class="bi bi-pen me-1"></i>{{ rb.author }}</div>
+                <div class="book-card-meta mt-auto">
+                  <span class="small text-muted">{{ rb.available_copies }} on shelf</span>
+                  <a href="{{ rb.get_absolute_url }}" class="text-primary small fw-semibold">View &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+

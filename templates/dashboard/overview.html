@@ -1,0 +1,180 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Executive Overview | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Executive Librarian Dashboard</h1>
+    <div class="text-muted small">Welcome back, <strong>{{ user.get_full_name|default:user.username }}</strong> &bull; Central Library GP Madhogarh Madhogarh</div>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'dashboard:book_create' %}" class="btn btn-primary btn-sm fw-semibold">
+      <i class="bi bi-plus-circle me-1"></i> Add Book
+    </a>
+    <a href="{% url 'dashboard:notice_create' %}" class="btn btn-warning btn-sm fw-semibold text-dark">
+      <i class="bi bi-megaphone me-1"></i> Post Notice
+    </a>
+  </div>
+</div>
+
+<!-- Key Metrics Grid -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card-metric">
+      <div class="metric-icon-box metric-blue"><i class="bi bi-book"></i></div>
+      <div>
+        <div class="metric-value">{{ stats.total_books }}</div>
+        <div class="metric-label">Book Titles</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-3">
+    <div class="card-metric">
+      <div class="metric-icon-box metric-teal"><i class="bi bi-collection"></i></div>
+      <div>
+        <div class="metric-value">{{ stats.total_copies }}</div>
+        <div class="metric-label">Physical Copies</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-3">
+    <div class="card-metric">
+      <div class="metric-icon-box metric-emerald"><i class="bi bi-check-circle"></i></div>
+      <div>
+        <div class="metric-value">{{ stats.available_copies }}</div>
+        <div class="metric-label">On Shelf (Available)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-3">
+    <div class="card-metric">
+      <div class="metric-icon-box metric-amber"><i class="bi bi-file-earmark-pdf"></i></div>
+      <div>
+        <div class="metric-value">{{ stats.total_resources }}</div>
+        <div class="metric-label">Digital Documents</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Workflow Pending Badges Row -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card p-3 border-0 shadow-sm bg-white d-flex flex-row justify-content-between align-items-center">
+      <div>
+        <div class="text-muted small fw-bold text-uppercase">Pending Cards</div>
+        <h4 class="fw-bold mb-0 text-dark">{{ stats.pending_memberships }}</h4>
+      </div>
+      <a href="{% url 'dashboard:memberships' %}?status=PENDING" class="btn btn-sm btn-outline-primary">Review &rarr;</a>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-3">
+    <div class="card p-3 border-0 shadow-sm bg-white d-flex flex-row justify-content-between align-items-center">
+      <div>
+        <div class="text-muted small fw-bold text-uppercase">Book Requests</div>
+        <h4 class="fw-bold mb-0 text-dark">{{ stats.pending_recommendations }}</h4>
+      </div>
+      <a href="{% url 'dashboard:recommendations' %}" class="btn btn-sm btn-outline-primary">Review &rarr;</a>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-3">
+    <div class="card p-3 border-0 shadow-sm bg-white d-flex flex-row justify-content-between align-items-center">
+      <div>
+        <div class="text-muted small fw-bold text-uppercase">Resource Requests</div>
+        <h4 class="fw-bold mb-0 text-dark">{{ stats.pending_requests }}</h4>
+      </div>
+      <a href="{% url 'dashboard:requests' %}" class="btn btn-sm btn-outline-primary">Review &rarr;</a>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-3">
+    <div class="card p-3 border-0 shadow-sm bg-white d-flex flex-row justify-content-between align-items-center">
+      <div>
+        <div class="text-muted small fw-bold text-uppercase">New Feedback</div>
+        <h4 class="fw-bold mb-0 text-dark">{{ stats.unread_feedback }}</h4>
+      </div>
+      <a href="{% url 'dashboard:feedback' %}" class="btn btn-sm btn-outline-primary">Read &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Books & Pending Applications -->
+<div class="row g-4">
+  <!-- Recent Books -->
+  <div class="col-lg-6">
+    <div class="card-data-table">
+      <div class="card-data-header">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-book text-primary me-2"></i>Recently Added Books</h5>
+        <a href="{% url 'dashboard:book_list' %}" class="btn btn-sm btn-outline-secondary">View All</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 small">
+          <thead class="table-light">
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Department</th>
+              <th>Copies</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book in recent_books %}
+              <tr>
+                <td><strong><a href="{% url 'dashboard:book_copies' book_id=book.id %}" class="text-dark text-decoration-none">{{ book.title|truncatechars:28 }}</a></strong></td>
+                <td>{{ book.author|truncatechars:20 }}</td>
+                <td>{{ book.department.code|default:"-" }}</td>
+                <td><span class="badge bg-secondary">{{ book.total_copies }}</span></td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="4" class="text-center py-3 text-muted">No books recorded yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending Membership Applications -->
+  <div class="col-lg-6">
+    <div class="card-data-table">
+      <div class="card-data-header">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-person-badge text-success me-2"></i>Recent Card Applications</h5>
+        <a href="{% url 'dashboard:memberships' %}" class="btn btn-sm btn-outline-secondary">Manage</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 small">
+          <thead class="table-light">
+            <tr>
+              <th>Applicant</th>
+              <th>Roll Number</th>
+              <th>Department</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in recent_applications %}
+              <tr>
+                <td><strong>{{ app.full_name }}</strong></td>
+                <td><code>{{ app.roll_number }}</code></td>
+                <td>{{ app.department.code }}</td>
+                <td>
+                  <a href="{% url 'dashboard:memberships' %}" class="btn btn-sm btn-primary py-0 px-2">Verify</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="4" class="text-center py-3 text-muted">No pending applications at this time.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

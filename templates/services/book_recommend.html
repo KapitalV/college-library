@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Recommend a Book for Library Procurement | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'services:service_list' %}">Services</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Book Recommendation</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white">
+        <div class="section-header-academic mb-4">
+          <span class="badge-kicker"><i class="bi bi-bookmark-plus-fill me-1"></i> Collection Development</span>
+          <h2>Recommend a Book for Library Procurement</h2>
+          <p>Faculty members and diploma scholars may suggest standard textbooks or technical volumes for inclusion in the institutional collection.</p>
+        </div>
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label small fw-bold text-dark">Book Title *</label>
+              {{ form.title }}
+              {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors }}</div>{% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-dark">Author(s) *</label>
+              {{ form.author }}
+              {% if form.author.errors %}<div class="text-danger small mt-1">{{ form.author.errors }}</div>{% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-dark">Publisher</label>
+              {{ form.publisher }}
+              {% if form.publisher.errors %}<div class="text-danger small mt-1">{{ form.publisher.errors }}</div>{% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">ISBN (if known)</label>
+              {{ form.isbn }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">Edition</label>
+              {{ form.edition }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">Relevant Department</label>
+              {{ form.department }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">Your Full Name *</label>
+              {{ form.recommender_name }}
+              {% if form.recommender_name.errors %}<div class="text-danger small mt-1">{{ form.recommender_name.errors }}</div>{% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">Role *</label>
+              {{ form.recommender_role }}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">Your Email *</label>
+              {{ form.recommender_email }}
+              {% if form.recommender_email.errors %}<div class="text-danger small mt-1">{{ form.recommender_email.errors }}</div>{% endif %}
+            </div>
+
+            <div class="col-12">
+              <label class="form-label small fw-bold text-dark">Academic Justification & Curricula Value *</label>
+              {{ form.reason }}
+              {% if form.reason.errors %}<div class="text-danger small mt-1">{{ form.reason.errors }}</div>{% endif %}
+            </div>
+
+            <div class="col-12 pt-3 border-top d-flex justify-content-between align-items-center">
+              <a href="{% url 'services:service_list' %}" class="btn btn-outline-secondary">Back</a>
+              <button type="submit" class="btn btn-primary fw-bold px-4">
+                <i class="bi bi-check-lg me-1"></i> Submit Recommendation
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

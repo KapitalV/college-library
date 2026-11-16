@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Government Polytechnic Madhogarh Library | Central Library &amp; Digital Resource Portal{% endblock %}
+
+{% block content %}
+<!-- ================= BLOG POST 1: STUDENT GUIDE ================= -->
+<div class="blog-post">
+  <!-- Date Header -->
+  <div class="date-header">
+    <span>Thursday, October 8, 2026</span>
+  </div>
+
+  <!-- Post Title -->
+  <h1 class="post-title" style="font-size:22px; margin-bottom:14px;">
+    <a href="{% url 'pages:about' %}">A Student&#8217;s Guide to Government Polytechnic Madhogarh Library</a>
+  </h1>
+
+  <!-- Post Body Content -->
+  <div class="post-body">
+    <!-- Institutional Welcome Banner -->
+    <div style="background: linear-gradient(135deg, #14532d, #166534); color: white; padding: 22px 18px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+      <h2 style="color: white; margin: 0 0 8px; font-size: 20px;">A Student&#8217;s Guide to GP Madhogarh Library</h2>
+      <p style="margin: 0; font-size: 14px; opacity: 0.95;">Government Polytechnic Madhogarh</p>
+      <p style="margin: 4px 0 0; font-size: 13px; opacity: 0.85;">Kailor, Madhogarh, District Jalaun, Uttar Pradesh &ndash; 285126</p>
+    </div>
+
+    <p>
+      Welcome to the Government Polytechnic Madhogarh Library! The Central Library supports diploma scholars, engineering students, and faculty in their academic learning, technical curriculum, and information needs. This guide explains how students can explore Library resources and use the available services.
+    </p>
+
+    <!-- Section 1: Explore Resources -->
+    <h3 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 6px; font-size: 16px; margin-top: 20px;">
+      1. Explore Library Resources
+    </h3>
+    <p>Students are encouraged to use available resources for classroom learning, assignments, diploma laboratory work, projects, and self-study:</p>
+    <ul>
+      <li>Textbooks and curriculum books for all 3 engineering departments:
+        <strong>Computer Science &amp; Engineering</strong>, 
+        <strong>Electrical Engineering</strong>, and 
+        <strong>Electronics Engineering</strong>.
+      </li>
+      <li>Reference materials, technical manuals, and engineering handbooks.</li>
+      <li>BTEUP semester examination question papers and curriculum syllabus.</li>
+      <li>Digital learning repositories, e-books, and video lectures.</li>
+      <li>New arrivals and Library updates.</li>
+    </ul>
+
+    <!-- Section 2: Search Books through OPAC -->
+    <h3 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 6px; font-size: 16px; margin-top: 20px;">
+      2. Search Books through OPAC
+    </h3>
+    <p>
+      The Online Public Access Catalogue (OPAC) helps students and faculty search the Library catalogue by book title, author name, subject, or accession number.
+    </p>
+
+    <!-- Embedded OPAC Search Box (matching reference design) -->
+    <div style="background: #f1f8f2; border: 1px solid #b7d8bc; border-radius: 8px; padding: 16px; margin: 16px 0;">
+      <form action="{% url 'catalog:search' %}" method="get" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <input type="text" name="q" placeholder="Enter Book Title, Author Name, or Subject (e.g. Applied Physics, C Programming)..." style="flex: 1; min-width: 200px; padding: 9px 12px; border: 1px solid #2e7d32; border-radius: 4px; font-size: 13px;" required autocomplete="off" />
+        <button type="submit" style="background: #1b5e20; color: #fff; border: none; padding: 9px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px;">
+          Search OPAC
+        </button>
+      </form>
+    </div>
+
+    <!-- Section 3: Digital Library Access -->
+    <h3 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 6px; font-size: 16px; margin-top: 20px;">
+      3. Digital Library &amp; National Portals
+    </h3>
+    <p>
+      Government Polytechnic Madhogarh provides integrated access to national digital learning repositories:
+    </p>
+    <ul>
+      <li><strong>e-Granthalaya 4.0 (EG4) NIC Cloud:</strong> Institutional library automation and cloud catalogue (<a href="{{ site_settings.egranthalaya_url|default:'http://eg4.nic.in/' }}" target="_blank" rel="noopener noreferrer">http://eg4.nic.in/</a>).</li>
+      <li><strong>National Digital Library of India (NDLI):</strong> Over 100+ million educational resources and e-books developed by IIT Kharagpur (<a href="https://ndl.iitkgp.ac.in/" target="_blank" rel="noopener noreferrer">ndl.iitkgp.ac.in</a>).</li>
+      <li><strong>SWAYAM &amp; NPTEL:</strong> Free online video courses, lectures, and certifications by premier institutes (<a href="https://swayam.gov.in/" target="_blank" rel="noopener noreferrer">swayam.gov.in</a>).</li>
+      <li><strong>AICTE e-KUMBH Portal:</strong> Technical education books in Hindi and Indian regional languages (<a href="https://ekumbh.aicte-india.org/" target="_blank" rel="noopener noreferrer">ekumbh.aicte-india.org</a>).</li>
+    </ul>
+
+    <!-- Section 4: Question Papers & Syllabus -->
+    <h3 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 6px; font-size: 16px; margin-top: 20px;">
+      4. BTEUP Question Papers &amp; Syllabus
+    </h3>
+    <p>
+      Semester examination papers and official BTEUP curriculum schemes are organized by branch:
+    </p>
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th>Department / Branch</th>
+          <th>Branch Code</th>
+          <th>Available Resources</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Computer Science &amp; Engineering</strong></td>
+          <td>355 / 389</td>
+          <td>Curriculum Syllabus, BTEUP Exam Papers, Lab Manuals</td>
+          <td><a href="{% url 'resources:question_papers' %}?dept=cse" class="resource-download-btn">View Papers</a></td>
+        </tr>
+        <tr>
+          <td><strong>Electrical Engineering</strong></td>
+          <td>328 / 378</td>
+          <td>Machines, Power Systems, Circuit Theory Papers</td>
+          <td><a href="{% url 'resources:question_papers' %}?dept=ee" class="resource-download-btn">View Papers</a></td>
+        </tr>
+        <tr>
+          <td><strong>Electronics Engineering</strong></td>
+          <td>330 / 380</td>
+          <td>Digital Electronics, Microprocessor, Comm. Engg. Papers</td>
+          <td><a href="{% url 'resources:question_papers' %}?dept=ece" class="resource-download-btn">View Papers</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Section 5: Borrowing Limits & Rules -->
+    <h3 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 6px; font-size: 16px; margin-top: 20px;">
+      5. Library Timings, Circulation &amp; Borrowing Limits
+    </h3>
+    <p>Members must present their valid Institutional Identity Card / Library Card during circulation hours:</p>
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Loan Quota</th>
+          <th>Loan Duration</th>
+          <th>Renewal Policy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Regular Diploma Students</td>
+          <td><strong>3 Books</strong></td>
+          <td>14 Days</td>
+          <td>1 Renewal (if no reservation)</td>
+        </tr>
+        <tr>
+          <td>Book Bank Beneficiaries (SC/ST/Merit)</td>
+          <td><strong>Full Semester Set</strong></td>
+          <td>Full Semester</td>
+          <td>Return post semester exams</td>
+        </tr>
+        <tr>
+          <td>Faculty &amp; Instructional Staff</td>
+          <td><strong>6 Books</strong></td>
+          <td>30 Days</td>
+          <td>Renewable</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="background: #f8f9fa; border-left: 4px solid #2e7d32; padding: 10px 14px; margin-top: 14px; font-size: 13px;">
+      <strong>🕒 Operational Timings:</strong> Monday to Saturday: 10:00 AM &ndash; 05:00 PM | Reading Hall: 09:30 AM &ndash; 05:30 PM (Sunday &amp; Gazetted Holidays: Closed).
+    </div>
+
+    <!-- Post Labels -->
+    <div class="post-labels">
+      <span style="font-size:12px; color:#666; align-self:center;">Labels:</span>
+      <span class="post-label-tag">Student Guide</span>
+      <span class="post-label-tag">Library Services</span>
+      <span class="post-label-tag">OPAC</span>
+      <span class="post-label-tag">Digital Library</span>
+      <span class="post-label-tag">Announcements</span>
+    </div>
+  </div>
+</div>
+
+<hr class="post-separator">
+
+<!-- ================= BLOG POST 2: ADMISSION & ORIENTATION ================= -->
+<div class="blog-post">
+  <!-- Date Header -->
+  <div class="date-header">
+    <span>Saturday, August 1, 2026</span>
+  </div>
+
+  <!-- Post Title -->
+  <h2 class="post-title" style="font-size:20px; margin-bottom:12px;">
+    <a href="{% url 'notices:notice_list' %}">Welcome Newly Admitted Students &ndash; Academic Session 2026-27</a>
+  </h2>
+
+  <!-- Post Body -->
+  <div class="post-body">
+    <p>
+      The Central Library extends a warm welcome to all newly admitted diploma engineering students of 
+      <strong>Government Polytechnic Madhogarh, Kailor (Jalaun)</strong> for the academic session 2026-27.
+    </p>
+    <p>
+      All 1st year students enrolled in <strong>Computer Science &amp; Engineering</strong>, 
+      <strong>Electrical Engineering</strong>, and <strong>Electronics Engineering</strong> are advised to complete their Library Card registration and NDLI Club enrollment at the earliest.
+    </p>
+
+    <div style="background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 6px; padding: 12px 16px; margin: 12px 0;">
+      <h4 style="color:#1b5e20; margin:0 0 6px; font-size:14px;">📌 Steps for Library Card Issuance:</h4>
+      <ol style="margin:0 0 0 18px; padding:0; font-size:13px; line-height:1.7;">
+        <li>Collect the Library Registration Form from the circulation desk or download online via Library Services.</li>
+        <li>Attach one passport-size photograph and copy of your JEECUP admission allotment letter / college fee receipt.</li>
+        <li>Submit to the Librarian, <strong>Mrs. Priyanka Singh Dangi</strong>, at the Central Library counter.</li>
+        <li>Activate your National Digital Library of India (NDLI) Club membership using Passkey: <code style="color:#c62828; font-weight:bold;">d3a479f5-9822-4888-a86e-eb91d907c873</code>.</li>
+      </ol>
+    </div>
+
+    <!-- Post Labels -->
+    <div class="post-labels">
+      <span style="font-size:12px; color:#666; align-self:center;">Labels:</span>
+      <span class="post-label-tag">Orientation</span>
+      <span class="post-label-tag">Admissions 2026-27</span>
+      <span class="post-label-tag">Book Bank</span>
+      <span class="post-label-tag">NDLI Club</span>
+    </div>
+  </div>
+</div>
+
+<hr class="post-separator">
+
+<!-- ================= LIVE STATS SUMMARY STRIP ================= -->
+<div style="background:#f9fbf9; border:1px solid #d8e6d9; border-radius:6px; padding:15px; margin-top:20px;">
+  <div style="font-weight:bold; color:#1b5e20; font-size:14px; margin-bottom:10px; text-transform:uppercase;">
+    📊 Institutional Repository Summary
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; text-align:center;">
+    <div style="background:#fff; border:1px solid #e0e0e0; border-radius:4px; padding:10px;">
+      <div style="font-size:20px; font-weight:bold; color:#0d47a1;">{{ stats.total_titles|default:"1,250+" }}</div>
+      <div style="font-size:11px; color:#555; text-transform:uppercase; margin-top:2px;">Catalogue Titles</div>
+    </div>
+    <div style="background:#fff; border:1px solid #e0e0e0; border-radius:4px; padding:10px;">
+      <div style="font-size:20px; font-weight:bold; color:#1b5e20;">{{ stats.total_copies|default:"4,800+" }}</div>
+      <div style="font-size:11px; color:#555; text-transform:uppercase; margin-top:2px;">Book Volumes</div>
+    </div>
+    <div style="background:#fff; border:1px solid #e0e0e0; border-radius:4px; padding:10px;">
+      <div style="font-size:20px; font-weight:bold; color:#c62828;">{{ stats.total_question_papers|default:"60+" }}</div>
+      <div style="font-size:11px; color:#555; text-transform:uppercase; margin-top:2px;">BTEUP Papers</div>
+    </div>
+    <div style="background:#fff; border:1px solid #e0e0e0; border-radius:4px; padding:10px;">
+      <div style="font-size:20px; font-weight:bold; color:#f57f17;">{{ stats.total_departments|default:"3" }}</div>
+      <div style="font-size:11px; color:#555; text-transform:uppercase; margin-top:2px;">Engg. Branches</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

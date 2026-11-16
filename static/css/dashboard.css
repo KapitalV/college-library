@@ -1,0 +1,182 @@
+/* ==========================================================================
+   Librarian Administration Dashboard Styles
+   ========================================================================== */
+
+.dashboard-wrapper {
+  display: flex;
+  min-height: calc(100vh - 140px);
+  background-color: #f1f5f9;
+}
+
+.dashboard-sidebar {
+  width: 260px;
+  background-color: var(--lib-navy);
+  color: #e2e8f0;
+  flex-shrink: 0;
+  padding: 24px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-sidebar-header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 15px;
+}
+
+.dashboard-sidebar-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.dashboard-sidebar-subtitle {
+  font-size: 0.76rem;
+  color: var(--lib-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dashboard-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-nav-item {
+  margin-bottom: 2px;
+}
+
+.dashboard-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dashboard-nav-link:hover,
+.dashboard-nav-link.active {
+  background-color: var(--lib-teal);
+  color: #ffffff;
+}
+
+.dashboard-nav-link i {
+  font-size: 1.15rem;
+  color: var(--lib-gold);
+}
+
+.dashboard-nav-heading {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  padding: 16px 20px 6px;
+  font-weight: 700;
+}
+
+.dashboard-content {
+  flex: 1 1 auto;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.dashboard-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.dashboard-page-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--lib-navy);
+  margin-bottom: 4px;
+}
+
+/* Dashboard Metric Cards */
+.card-metric {
+  background: #ffffff;
+  border: 1px solid var(--lib-border);
+  border-radius: var(--lib-radius-md);
+  padding: 20px;
+  box-shadow: var(--lib-shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.2s ease;
+}
+
+.card-metric:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lib-shadow-md);
+}
+
+.metric-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.metric-blue { background: #e0f2fe; color: #0284c7; }
+.metric-teal { background: var(--lib-teal-light); color: var(--lib-teal-dark); }
+.metric-amber { background: #fef3c7; color: #d97706; }
+.metric-emerald { background: #d1fae5; color: #059669; }
+.metric-rose { background: #ffe4e6; color: #e11d48; }
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--lib-navy);
+  line-height: 1;
+}
+
+.metric-label {
+  font-size: 0.82rem;
+  color: var(--lib-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Data Tables */
+.card-data-table {
+  background: #ffffff;
+  border: 1px solid var(--lib-border);
+  border-radius: var(--lib-radius-md);
+  box-shadow: var(--lib-shadow-sm);
+  overflow: hidden;
+}
+
+.card-data-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--lib-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 991.98px) {
+  .dashboard-wrapper {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+    padding: 12px 0;
+  }
+  .dashboard-content {
+    padding: 16px;
+  }
+}
+

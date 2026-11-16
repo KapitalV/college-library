@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Library & Campus Photo Gallery | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'events:event_list' %}">Events</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Photo Gallery</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-images me-1"></i> Visual Showcase</span>
+    <h2>Library & Campus Life Photo Gallery</h2>
+    <p>Photographs documenting our air-cooled reading halls, stack areas, orientation sessions, book exhibitions, and student activities.</p>
+  </div>
+
+  <div class="row g-4 mb-4">
+    {% for photo in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+          {% if photo.image %}
+            <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="img-fluid" style="height: 240px; object-fit: cover;">
+          {% else %}
+            <div class="p-5 text-center text-white" style="height: 240px; background: linear-gradient(135deg, var(--lib-navy) 0%, var(--lib-teal) 100%);">
+              <i class="bi bi-image" style="font-size: 4rem; opacity: 0.7;"></i>
+            </div>
+          {% endif %}
+          <div class="card-body p-3">
+            <h6 class="fw-bold text-dark mb-1">{{ photo.title }}</h6>
+            <p class="small text-muted mb-0">{{ photo.caption }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <!-- Placeholder showcase cards demonstrating institutional spaces -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+          <div class="p-5 text-center text-white" style="height: 220px; background: linear-gradient(135deg, #102a43 0%, #0f766e 100%);">
+            <i class="bi bi-journal-bookmark-fill" style="font-size: 3.5rem; color: var(--lib-gold);"></i>
+            <div class="fw-bold mt-2">Central Reading Hall</div>
+          </div>
+          <div class="card-body p-3">
+            <h6 class="fw-bold mb-1">Spacious Air-Cooled Reading Hall</h6>
+            <p class="small text-muted mb-0">Dedicated silent study zones with comfortable seating for 120 students.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+          <div class="p-5 text-center text-white" style="height: 220px; background: linear-gradient(135deg, #0f766e 0%, #1e293b 100%);">
+            <i class="bi bi-pc-display" style="font-size: 3.5rem; color: #38bdf8;"></i>
+            <div class="fw-bold mt-2">OPAC & Digital Lab</div>
+          </div>
+          <div class="card-body p-3">
+            <h6 class="fw-bold mb-1">Digital Library Terminals</h6>
+            <p class="small text-muted mb-0">High-speed workstations for e-Granthalaya catalog search and NDLI e-book access.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+          <div class="p-5 text-center text-white" style="height: 220px; background: linear-gradient(135deg, #881337 0%, #102a43 100%);">
+            <i class="bi bi-collection-fill" style="font-size: 3.5rem; color: #fbbf24;"></i>
+            <div class="fw-bold mt-2">Book Bank Stacks</div>
+          </div>
+          <div class="card-body p-3">
+            <h6 class="fw-bold mb-1">Book Bank Stacks & Reference Section</h6>
+            <p class="small text-muted mb-0">Over 3,500 physical textbooks systematically arranged by Dewey Decimal classification.</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

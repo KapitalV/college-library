@@ -1,0 +1,141 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Site & Institutional Settings | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Institutional Site Settings</h1>
+    <div class="text-muted small">Update college identity, library contact details, operating hours, and external portal URLs.</div>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-3 p-4 bg-white mb-4">
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-building me-2 text-primary"></i>Institution & Library Identity</h5>
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">College Full Name</label>
+        {{ form.college_name }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Library Name</label>
+        {{ form.library_name }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Short Display Name</label>
+        {{ form.short_name }}
+      </div>
+      <div class="col-md-8">
+        <label class="form-label small fw-bold">Affiliation & Accreditation Info</label>
+        {{ form.affiliation_info }}
+      </div>
+      <div class="col-12">
+        <label class="form-label small fw-bold">Institutional Tagline</label>
+        {{ form.tagline }}
+      </div>
+    </div>
+
+    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-geo-alt me-2 text-danger"></i>Location & Official Contacts</h5>
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <label class="form-label small fw-bold">Campus Location</label>
+        {{ form.campus_location }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small fw-bold">District</label>
+        {{ form.district }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small fw-bold">State</label>
+        {{ form.state }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small fw-bold">Postal PIN Code</label>
+        {{ form.postal_code }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Helpline Phone</label>
+        {{ form.contact_phone }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Library Official Email</label>
+        {{ form.library_email }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Principal Email</label>
+        {{ form.principal_email }}
+      </div>
+      <div class="col-12">
+        <label class="form-label small fw-bold">College Official Website URL</label>
+        {{ form.college_website_url }}
+      </div>
+    </div>
+
+    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-clock-history me-2 text-warning"></i>Operating Timings</h5>
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Weekday Hours (Mon - Sat)</label>
+        {{ form.opening_hours_weekday }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Weekend Hours (Sun & Holidays)</label>
+        {{ form.opening_hours_weekend }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Reading Hall Timings</label>
+        {{ form.reading_hall_hours }}
+      </div>
+    </div>
+
+    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-globe me-2 text-success"></i>External Digital Portals</h5>
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">e-Granthalaya (EG4) URL</label>
+        {{ form.egranthalaya_url }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">National Digital Library (NDLI) URL</label>
+        {{ form.ndli_portal_url }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">NDLI Club Registration URL</label>
+        {{ form.ndli_club_reg_url }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">AICTE e-KUMBH URL</label>
+        {{ form.ekumbh_url }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">SWAYAM / NPTEL URL</label>
+        {{ form.swayam_url }}
+      </div>
+    </div>
+
+    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-card-text me-2 text-info"></i>Homepage & Footer Texts</h5>
+    <div class="row g-3 mb-4">
+      <div class="col-12">
+        <label class="form-label small fw-bold">Hero Headline Title</label>
+        {{ form.hero_title }}
+      </div>
+      <div class="col-12">
+        <label class="form-label small fw-bold">Hero Subtitle</label>
+        {{ form.hero_subtitle }}
+      </div>
+      <div class="col-12">
+        <label class="form-label small fw-bold">Footer About Paragraph</label>
+        {{ form.footer_about }}
+      </div>
+    </div>
+
+    <div class="pt-3 border-top d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary fw-bold px-4 py-2">
+        <i class="bi bi-save me-1"></i> Save Institutional Settings
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

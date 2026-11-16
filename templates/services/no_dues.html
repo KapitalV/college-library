@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Clearance (No-Dues) Certificate Procedure | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'services:service_list' %}">Services</a></li>
+      <li class="breadcrumb-item active" aria-current="page">No-Dues Clearance</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white">
+        <div class="section-header-academic mb-4">
+          <span class="badge-kicker"><i class="bi bi-file-earmark-check-fill me-1"></i> Academic Clearance</span>
+          <h2>Library Clearance (No-Dues) Certificate Procedure</h2>
+          <p>Official step-by-step instructions for diploma students completing their course, transferring, or receiving diplomas.</p>
+        </div>
+
+        <div class="alert alert-warning py-3 small mb-4">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <strong>Important Mandate:</strong> A valid Library No-Dues Certificate is mandatory prior to collecting your BTEUP Final Diploma, Marksheets, or Migration Certificate from the Registrar's Office.
+        </div>
+
+        <h5 class="fw-bold text-dark mb-3">Step-by-Step Procedure</h5>
+        <div class="timeline-procedure mb-4">
+          <div class="p-3 bg-light rounded-3 mb-3 border-start border-4 border-primary">
+            <h6 class="fw-bold mb-1">Step 1: Check Your Borrowing Records</h6>
+            <p class="small text-secondary mb-0">
+              Verify that all physical textbooks issued in your name have been returned to the circulation counter in good physical condition.
+            </p>
+          </div>
+
+          <div class="p-3 bg-light rounded-3 mb-3 border-start border-4 border-primary">
+            <h6 class="fw-bold mb-1">Step 2: Clear Pending Dues / Fines</h6>
+            <p class="small text-secondary mb-0">
+              Clear any outstanding overdue fines at the library accounts counter and retain your fee receipt.
+            </p>
+          </div>
+
+          <div class="p-3 bg-light rounded-3 mb-3 border-start border-4 border-primary">
+            <h6 class="fw-bold mb-1">Step 3: Return Library Membership Card</h6>
+            <p class="small text-secondary mb-0">
+              Surrender your laminated Central Library Membership Card and Book Bank cards to the circulation assistant.
+            </p>
+          </div>
+
+          <div class="p-3 bg-light rounded-3 mb-3 border-start border-4 border-success">
+            <h6 class="fw-bold mb-1 text-success">Step 4: Receive Signed Clearance Certificate</h6>
+            <p class="small text-secondary mb-0">
+              Upon successful verification of records, the Librarian will stamp and sign your institutional clearance slip.
+            </p>
+          </div>
+        </div>
+
+        <div class="card bg-light p-4 border rounded-3 mb-4">
+          <h6 class="fw-bold mb-2">Lost or Damaged Book Policy</h6>
+          <p class="small text-muted mb-0">
+            In the event of an accidental loss or damage to a library book, the student must either replace the volume with its latest edition or deposit the cost as assessed under institutional rules before clearance is granted.
+          </p>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+          <a href="{% url 'services:forms' %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-download me-1"></i> Download No-Dues Application Form (PDF)
+          </a>
+          <a href="{% url 'core:contact' %}" class="btn btn-primary btn-sm fw-semibold">
+            Contact Circulation Desk &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

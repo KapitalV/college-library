@@ -1,0 +1,22 @@
+[Unit]
+Description=Gunicorn daemon for Government Polytechnic Madhogarh Central Library Portal
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/gpm_library
+Environment="DJANGO_SETTINGS_MODULE=config.settings.production"
+EnvironmentFile=/var/www/gpm_library/.env
+ExecStart=/var/www/gpm_library/venv/bin/gunicorn \
+          --config /var/www/gpm_library/deployment/gunicorn_conf.py \
+          config.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

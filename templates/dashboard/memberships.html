@@ -1,0 +1,106 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Manage Membership Applications | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Library Membership Applications</h1>
+    <div class="text-muted small">Verify student enrollment, issue library cards, and record borrower cards.</div>
+  </div>
+</div>
+
+<div class="card-data-table mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle small">
+      <thead class="table-light">
+        <tr>
+          <th>Ref #</th>
+          <th>Student Name</th>
+          <th>Roll / Staff ID</th>
+          <th>Department</th>
+          <th>Semester</th>
+          <th>Status</th>
+          <th>Assigned Card #</th>
+          <th class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in page_obj %}
+          <tr>
+            <td><strong>#{{ app.id }}</strong></td>
+            <td>
+              <div class="fw-bold text-dark">{{ app.full_name }}</div>
+              <div class="text-muted small">{{ app.email }} &bull; {{ app.mobile_number }}</div>
+            </td>
+            <td><code>{{ app.roll_number }}</code></td>
+            <td>{{ app.department.code }}</td>
+            <td>Sem {{ app.semester }}</td>
+            <td>
+              {% if app.status == 'PENDING' %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% elif app.status == 'APPROVED' %}
+                <span class="badge bg-info">Approved</span>
+              {% elif app.status == 'CARD_ISSUED' %}
+                <span class="badge bg-success">Card Issued</span>
+              {% else %}
+                <span class="badge bg-danger">Rejected</span>
+              {% endif %}
+            </td>
+            <td><code>{{ app.card_number|default:"-" }}</code></td>
+            <td class="text-end">
+              <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#appModal{{ app.id }}">
+                Update
+              </button>
+            </td>
+          </tr>
+
+          <!-- Modal for update -->
+          <div class="modal fade" id="appModal{{ app.id }}" tabindex="-1" aria-labelledby="modalLabel{{ app.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form action="{% url 'dashboard:membership_update' pk=app.id %}" method="post">
+                  {% csrf_token %}
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="modalLabel{{ app.id }}">Update Application #{{ app.id }} ({{ app.full_name }})</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Application Status</label>
+                      <select name="status" class="form-select">
+                        <option value="PENDING" {% if app.status == 'PENDING' %}selected{% endif %}>Pending Verification</option>
+                        <option value="APPROVED" {% if app.status == 'APPROVED' %}selected{% endif %}>Approved (Ready to Collect)</option>
+                        <option value="CARD_ISSUED" {% if app.status == 'CARD_ISSUED' %}selected{% endif %}>Card Issued to Student</option>
+                        <option value="REJECTED" {% if app.status == 'REJECTED' %}selected{% endif %}>Rejected</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Assign Library Card Number</label>
+                      <input type="text" name="card_number" class="form-control" value="{{ app.card_number }}" placeholder="e.g. GP Madhogarh-LC-2026-0042">
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Librarian Remarks</label>
+                      <textarea name="librarian_remarks" class="form-control" rows="2">{{ app.librarian_remarks }}</textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        {% empty %}
+          <tr><td colspan="8" class="text-center py-4 text-muted">No membership applications recorded yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

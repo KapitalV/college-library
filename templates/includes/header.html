@@ -1,0 +1,10 @@
+{% load static %}
+<div class="header-wrapper">
+  <div class="header-banner-container">
+    <a href="{{ site_settings.college_website_url|default:'https://gpmadhogarh.ac.in/' }}" target="_blank" rel="noopener noreferrer" title="{{ site_settings.college_name|default:'Government Polytechnic Madhogarh' }} Central Library Portal">
+      <img src="{% if site_settings.hero_image %}{{ site_settings.hero_image.url }}{% else %}{% static 'img/gpm_header_banner.png' %}{% endif %}" 
+           alt="{{ site_settings.college_name|default:'Government Polytechnic Madhogarh' }} Central Library" 
+           class="header-banner-img">
+    </a>
+  </div>
+</div>

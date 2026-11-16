@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ department.name }} ({{ department.code }}) | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'departments:department_list' %}">Departments</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ department.code }}</li>
+    </ol>
+  </nav>
+
+  <!-- Department Header Banner -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 mb-4 text-white" style="background: linear-gradient(135deg, var(--lib-navy) 0%, var(--lib-teal) 100%);">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <span class="badge bg-warning text-dark fw-bold px-3 py-1 mb-2">BRANCH HUB: {{ department.code }}</span>
+        <h2 class="fw-bold mb-2 text-white">{{ department.name }}</h2>
+        <p class="text-white-50 lead fs-6 mb-3">{{ department.description }}</p>
+        <div class="d-flex flex-wrap gap-3 small text-white">
+          <span><i class="bi bi-person-fill text-warning"></i> HOD: <strong>{{ department.head_of_department|default:"In-Charge" }}</strong></span>
+          <span>&bull;</span>
+          <span><i class="bi bi-people-fill text-warning"></i> Approved Intake: <strong>{{ department.intake_capacity }} Students/Year</strong></span>
+          <span>&bull;</span>
+          <span><i class="bi bi-patch-check-fill text-warning"></i> Board: <strong>BTEUP Lucknow</strong></span>
+        </div>
+      </div>
+      <div class="col-lg-4 text-center d-none d-lg-block">
+        <i class="bi {{ department.icon|default:'bi-mortarboard' }}" style="font-size: 6rem; opacity: 0.85; color: var(--lib-gold);"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Semester Navigation Tabs -->
+  <div class="card border-0 shadow-sm rounded-3 p-3 mb-4 bg-white">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <span class="fw-bold text-dark small"><i class="bi bi-funnel-fill text-primary me-1"></i> Filter by Semester:</span>
+      <div class="btn-group flex-wrap" role="group">
+        <a href="{% url 'departments:department_detail' slug=department.slug %}" class="btn btn-sm {% if not selected_semester %}btn-primary{% else %}btn-outline-primary{% endif %}">
+          All Semesters
+        </a>
+        {% for s in semesters_range %}
+          <a href="{% url 'departments:department_detail' slug=department.slug %}?semester={{ s }}" class="btn btn-sm {% if selected_semester == s %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            Sem {{ s }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Left Column: Curricula Subjects -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-3 p-4 mb-4 bg-white">
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-journal-bookmark-fill text-primary me-2"></i>Curricula Courses</h5>
+        <div class="list-group list-group-flush small">
+          {% for sub in subjects %}
+            <div class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold text-dark">{{ sub.name }}</div>
+                <div class="text-muted small">Code: {{ sub.code|default:"-" }}</div>
+              </div>
+              <span class="badge bg-light text-dark border">Sem {{ sub.semester }}</span>
+            </div>
+          {% empty %}
+            <div class="text-muted py-2">No subjects configured for this selection.</div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-light">
+        <h6 class="fw-bold text-dark mb-3">Branch Shortcuts</h6>
+        <div class="d-grid gap-2">
+          <a href="{% url 'resources:question_papers' %}?department={{ department.id }}" class="btn btn-outline-danger btn-sm text-start">
+            <i class="bi bi-file-earmark-pdf-fill me-2"></i> {{ department.code }} Question Papers
+          </a>
+          <a href="{% url 'resources:syllabus' %}?department={{ department.id }}" class="btn btn-outline-success btn-sm text-start">
+            <i class="bi bi-card-checklist me-2"></i> {{ department.code }} Detailed Syllabus
+          </a>
+          <a href="{% url 'resources:lecture_notes' %}?department={{ department.id }}" class="btn btn-outline-primary btn-sm text-start">
+            <i class="bi bi-file-earmark-slides-fill me-2"></i> Faculty Notes & PPTs
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Books & Academic Materials -->
+    <div class="col-lg-8">
+      <!-- Section: Prescribed Textbooks in Catalog -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-book text-primary me-2"></i>Books in Library Collection ({{ books.count }})</h5>
+        <a href="{% url 'catalog:search' %}?department={{ department.id }}" class="small text-primary fw-semibold">View in OPAC &rarr;</a>
+      </div>
+
+      <div class="row g-3 mb-4">
+        {% for book in books %}
+          <div class="col-md-6">
+            <div class="card-book h-100">
+              <div class="card-book-body">
+                <span class="badge bg-primary-subtle text-primary mb-1 align-self-start">{{ book.category.name|default:"Textbook" }}</span>
+                <a href="{{ book.get_absolute_url }}" class="text-decoration-none">
+                  <h6 class="book-card-title">{{ book.title }}</h6>
+                </a>
+                <div class="book-card-author small"><i class="bi bi-pen me-1"></i>{{ book.author }}</div>
+                <div class="small text-muted mb-2">Publisher: {{ book.publisher|default:"Standard" }}</div>
+                <div class="book-card-meta">
+                  {% if book.is_available %}
+                    <span class="badge bg-success-subtle text-success">{{ book.available_copies }} on shelf</span>
+                  {% else %}
+                    <span class="badge bg-danger-subtle text-danger">Issued</span>
+                  {% endif %}
+                  <a href="{{ book.get_absolute_url }}" class="text-primary small fw-semibold">Details &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-12 text-muted small py-3">No specific books mapped to this branch yet. Browse all in OPAC.</div>
+        {% endfor %}
+      </div>
+
+      <!-- Section: Question Papers -->
+      <div class="d-flex justify-content-between align-items-center mb-3 border-top pt-4">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-file-earmark-text text-danger me-2"></i>Previous Year Question Papers</h5>
+        <a href="{% url 'resources:question_papers' %}?department={{ department.id }}" class="small text-danger fw-semibold">All Papers &rarr;</a>
+      </div>
+
+      <div class="row g-3 mb-4">
+        {% for paper in question_papers %}
+          <div class="col-md-6">
+            <div class="resource-tile">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="resource-badge-format format-pdf">PDF</span>
+                <span class="small text-muted">{{ paper.academic_year }}</span>
+              </div>
+              <h6 class="fw-bold mb-1"><a href="{{ paper.get_absolute_url }}" class="text-dark text-decoration-none">{{ paper.title }}</a></h6>
+              <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+                <span class="small text-muted">Sem {{ paper.semester|default:"All" }}</span>
+                <a href="{% url 'resources:download' slug=paper.slug %}" class="btn btn-sm btn-outline-danger" target="_blank"><i class="bi bi-download"></i> Get PDF</a>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-12 text-muted small py-2">No question papers uploaded for this selection.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

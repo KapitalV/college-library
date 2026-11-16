@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.title }} | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'events:event_list' %}">Events</a></li>
+      <li class="breadcrumb-item active text-truncate" aria-current="page">{{ event.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+          <span class="badge bg-warning text-dark fw-bold fs-6">{{ event.get_event_type_display }}</span>
+          <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i> {{ event.start_date|date:"F d, Y" }}{% if event.end_date %} – {{ event.end_date|date:"F d, Y" }}{% endif %}</span>
+        </div>
+
+        <h2 class="fw-bold text-dark mb-3">{{ event.title }}</h2>
+
+        <div class="alert alert-light border small text-secondary mb-4">
+          <i class="bi bi-geo-alt-fill text-danger me-1"></i> <strong>Venue:</strong> {{ event.venue }}
+        </div>
+
+        <div class="event-body text-secondary" style="font-size: 1.05rem; line-height: 1.8; white-space: pre-line;">
+          {{ event.description }}
+        </div>
+
+        <!-- Event Photos -->
+        {% if photos %}
+          <div class="mt-5 pt-4 border-top">
+            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-camera-fill text-primary me-2"></i>Event Photo Gallery</h5>
+            <div class="row g-3">
+              {% for p in photos %}
+                <div class="col-md-6">
+                  <div class="card border rounded-3 overflow-hidden shadow-sm">
+                    <img src="{{ p.image.url }}" alt="{{ p.title }}" class="img-fluid" style="height: 200px; object-fit: cover;">
+                    <div class="p-2 small text-muted text-center">{{ p.title }}</div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-white mb-4">
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-calendar-week text-primary me-2"></i>Other Activities</h5>
+        <div class="list-group list-group-flush small">
+          {% for oe in other_events %}
+            <a href="{{ oe.get_absolute_url }}" class="list-group-item list-group-item-action px-0 py-2">
+              <div class="fw-semibold text-dark">{{ oe.title }}</div>
+              <div class="text-muted small">{{ oe.start_date|date:"M d, Y" }} &bull; {{ oe.get_event_type_display }}</div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

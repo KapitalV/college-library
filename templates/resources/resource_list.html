@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Academic Digital Resources | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Digital Academic Resources</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-folder2-open me-1"></i> Academic Repository</span>
+    <h2>Academic Digital Learning Resources</h2>
+    <p>Explore syllabi, question banks, lecture presentations, e-books, and project reports mapped to BTEUP curricula.</p>
+  </div>
+
+  <!-- Filter Card -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 mb-4 bg-white">
+    <form action="{% url 'resources:resource_list' %}" method="get" class="row g-3 align-items-end">
+      <div class="col-md-3">
+        <label for="resQuery" class="form-label small fw-bold text-muted">Keyword</label>
+        <input type="text" name="q" id="resQuery" class="form-control" value="{{ query }}" placeholder="Search title or topic...">
+      </div>
+      <div class="col-md-3">
+        <label for="resCat" class="form-label small fw-bold text-muted">Category</label>
+        <select name="category" id="resCat" class="form-select">
+          <option value="">All Categories</option>
+          {% for code, label in categories %}
+            <option value="{{ code }}" {% if selected_category == code %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="resDept" class="form-label small fw-bold text-muted">Department</label>
+        <select name="department" id="resDept" class="form-select">
+          <option value="">All Departments</option>
+          {% for d in departments %}
+            <option value="{{ d.id }}" {% if selected_dept == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3 d-grid">
+        <button type="submit" class="btn btn-primary fw-semibold py-2">Filter Resources</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="row g-3 mb-4">
+    {% for res in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <div class="resource-tile h-100 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="resource-badge-format format-{{ res.file_format|lower }}">{{ res.get_category_display }}</span>
+              <span class="small text-muted">{{ res.get_file_format_display }}</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-1">
+              <a href="{{ res.get_absolute_url }}" class="text-dark text-decoration-none">{{ res.title }}</a>
+            </h5>
+            <p class="small text-muted mb-3">{{ res.description|truncatewords:20 }}</p>
+          </div>
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+            <span class="small text-secondary">
+              {% if res.department %}{{ res.department.code }}{% endif %}
+              {% if res.semester %}&bull; Sem {{ res.semester }}{% endif %}
+            </span>
+            <a href="{% url 'resources:download' slug=res.slug %}" class="btn btn-sm btn-outline-primary" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-1"></i> Access
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center py-5">
+        <p class="text-muted">No academic resources match your filter criteria.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

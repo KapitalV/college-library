@@ -1,0 +1,54 @@
+{% load static %}
+<div class="nav-bar">
+  <button type="button" class="nav-mobile-toggle" onclick="toggleMobileNav()">
+    <i class="bi bi-list"></i> ☰ MENU
+  </button>
+  <ul id="mainNavbarList">
+    <!-- 1. HOME -->
+    <li><a href="{% url 'core:home' %}">HOME</a></li>
+
+    <!-- 2. GP MADHOGARH LIBRARY -->
+    <li>
+      <a href="{% url 'pages:about' %}">LIBRARY &#9660;</a>
+      <ul>
+        <li><a href="{% url 'pages:about' %}">About Library</a></li>
+        <li><a href="{% url 'pages:rules' %}">Rules &amp; Regulations</a></li>
+        <li><a href="{% url 'services:service_list' %}">Library Services</a></li>
+      </ul>
+    </li>
+
+    <!-- 3. DIGITAL LIBRARY -->
+    <li>
+      <a href="{% url 'digital_library:home' %}">DIGITAL LIBRARY &#9660;</a>
+      <ul>
+        <li><a href="{{ site_settings.egranthalaya_url|default:'http://eg4.nic.in/' }}" target="_blank" rel="noopener noreferrer">e-Granthalaya (EG4)</a></li>
+        <li><a href="{{ site_settings.ndli_portal_url|default:'https://ndl.iitkgp.ac.in/' }}" target="_blank" rel="noopener noreferrer">National Digital Library</a></li>
+        <li><a href="{{ site_settings.swayam_url|default:'https://swayam.gov.in/' }}" target="_blank" rel="noopener noreferrer">SWAYAM / NPTEL</a></li>
+        <li><a href="{{ site_settings.ekumbh_url|default:'https://ekumbh.aicte-india.org/' }}" target="_blank" rel="noopener noreferrer">e-KUMBH Portal</a></li>
+        <li><a href="{% url 'digital_library:home' %}">Digital Library Gateway</a></li>
+      </ul>
+    </li>
+
+    <!-- 4. QUESTION PAPERS -->
+    <li><a href="{% url 'resources:question_papers' %}">QUESTION PAPERS</a></li>
+
+    <!-- 5. SYLLABUS -->
+    <li><a href="{% url 'resources:syllabus' %}">SYLLABUS</a></li>
+
+    <!-- 6. E-LEARNING CORNER -->
+    <li>
+      <a href="{% url 'resources:lecture_notes' %}">E-LEARNING CORNER &#9660;</a>
+      <ul>
+        <li><a href="{% url 'resources:lecture_notes' %}">Faculty PPTs &amp; Notes</a></li>
+        <li><a href="{% url 'resources:lecture_notes' %}?cat=video">Video Lectures</a></li>
+        <li><a href="{% url 'digital_library:home' %}">E-Books &amp; Study Material</a></li>
+      </ul>
+    </li>
+
+    <!-- 7. PHOTO GALLERY -->
+    <li><a href="{% url 'events:gallery_list' %}">PHOTO GALLERY</a></li>
+
+    <!-- 8. CONTACT US -->
+    <li><a href="#contact-section">CONTACT US</a></li>
+  </ul>
+</div>

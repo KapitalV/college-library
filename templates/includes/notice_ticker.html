@@ -1,0 +1,17 @@
+{% load static %}
+<div class="ticker-bar">
+  <span class="ticker-title">LATEST ANNOUNCEMENTS:</span>
+  <marquee onmouseout="this.start()" onmouseover="this.stop()" scrollamount="4">
+    {% if pinned_notices %}
+    {% for notice in pinned_notices %}
+    <a href="{{ notice.get_absolute_url }}"
+      style="color:#222; text-decoration:none; margin-right:30px; font-weight:600;">
+      📢 <span style="color:#c62828;">[{{ notice.get_priority_display }}]</span> {{ notice.title }}
+    </a>
+    {% endfor %}
+    {% else %}
+    Welcome to Government Polytechnic Madhogarh Library, Kailor, Jalaun. Access E-Resources, Faculty PPTs, BTEUP
+    Question Papers, and e-Granthalaya OPAC online.
+    {% endif %}
+  </marquee>
+</div>

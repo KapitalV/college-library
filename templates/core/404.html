@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Page Not Found | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <div class="row justify-content-center">
+    <div class="col-md-7 py-5">
+      <div class="display-1 fw-bold text-primary mb-3">404</div>
+      <h2 class="fw-bold mb-3">Page or Resource Not Found</h2>
+      <p class="text-muted lead mb-4">
+        The academic resource, book detail, or notice page you requested could not be found. It may have been relocated or updated.
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'core:home' %}" class="btn btn-primary px-4 py-2 fw-semibold">
+          <i class="bi bi-house-door me-1"></i> Return to Homepage
+        </a>
+        <a href="{% url 'catalog:search' %}" class="btn btn-outline-secondary px-4 py-2 fw-semibold">
+          <i class="bi bi-search me-1"></i> Search OPAC Catalogue
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,66 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="footer-cols">
+    <!-- Col 1: Institutional Identity -->
+    <div class="footer-col" style="flex: 1.4; min-width: 240px;">
+      <h5>{{ site_settings.short_name|default:"GP Madhogarh Central Library" }}</h5>
+      <p style="margin-bottom: 8px;">
+        {{ site_settings.footer_about|default:"The Central Library is the key knowledge repository of Government Polytechnic Madhogarh, Kailor, Jalaun (U.P.), supporting diploma engineering scholars and faculty members with curricula, books, and e-learning resources." }}
+      </p>
+      <div style="font-size: 11px; color: #ffeb3b; font-weight: bold; margin-top: 6px;">
+        🏛️ AICTE Approved &bull; BTEUP Affiliated &bull; Inst. Code: {{ site_settings.institution_code|default:"3318" }}
+      </div>
+    </div>
+
+    <!-- Col 2: Navigation Links -->
+    <div class="footer-col">
+      <h5>Library Links</h5>
+      <ul>
+        <li><a href="{% url 'core:home' %}">&raquo; Home</a></li>
+        <li><a href="{% url 'pages:about' %}">&raquo; About Library</a></li>
+        <li><a href="{% url 'pages:rules' %}">&raquo; Rules &amp; Regulations</a></li>
+        <li><a href="{% url 'services:service_list' %}">&raquo; Library Services</a></li>
+        <li><a href="{% url 'catalog:search' %}">&raquo; Catalogue (OPAC)</a></li>
+        <li><a href="{% url 'catalog:new_arrivals' %}">&raquo; New Arrivals</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 3: Academic Portals -->
+    <div class="footer-col">
+      <h5>Digital Portals</h5>
+      <ul>
+        <li><a href="{{ site_settings.college_website_url|default:'https://gpmadhogarh.ac.in/' }}" target="_blank" rel="noopener noreferrer">&raquo; College Portal</a></li>
+        <li><a href="{{ site_settings.erp_url|default:'https://erp.bizby.io/' }}" target="_blank" rel="noopener noreferrer">&raquo; Library ERP (erp.bizby.io)</a></li>
+        <li><a href="{{ site_settings.ndli_portal_url|default:'https://ndl.iitkgp.ac.in/' }}" target="_blank" rel="noopener noreferrer">&raquo; National Digital Library</a></li>
+        <li><a href="{{ site_settings.ekumbh_url|default:'https://ekumbh.aicte-india.org/' }}" target="_blank" rel="noopener noreferrer">&raquo; AICTE e-KUMBH Portal</a></li>
+        <li><a href="{{ site_settings.swayam_url|default:'https://swayam.gov.in/' }}" target="_blank" rel="noopener noreferrer">&raquo; SWAYAM / NPTEL</a></li>
+        <li><a href="{{ site_settings.egranthalaya_url|default:'http://eg4.nic.in/' }}" target="_blank" rel="noopener noreferrer">&raquo; e-Granthalaya (EG4)</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 4: Contact & Hours -->
+    <div class="footer-col" style="flex: 1.2; min-width: 220px;">
+      <h5>Contact &amp; Timings</h5>
+      <ul>
+        <li>📍 {{ site_settings.campus_location|default:"Kailor, Madhogarh" }}, {{ site_settings.district|default:"Jalaun" }} &ndash; {{ site_settings.postal_code|default:"285126" }}, U.P.</li>
+        <li>📞 Phone: <a href="tel:{{ site_settings.contact_phone|default:'9305574396' }}">{{ site_settings.contact_phone|default:"9305574396" }}</a></li>
+        <li>📧 Email: <a href="mailto:{{ site_settings.library_email|default:'govt.polytechnic.madhogarh@gmail.com' }}">{{ site_settings.library_email|default:"govt.polytechnic.madhogarh@gmail.com" }}</a></li>
+        <li style="margin-top:6px; color:#ffeb3b; font-weight:bold;">
+          🕒 {{ site_settings.opening_hours_weekday|default:"Mon - Sat: 10:00 AM - 05:00 PM" }}
+        </li>
+      </ul>
+      <div style="margin-top: 10px;">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard:overview' %}" style="background:#2e7d32; color:#fff; padding:3px 8px; border-radius:3px; font-size:11px; text-decoration:none;">Librarian Dashboard</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" style="background:#2e7d32; color:#fff; padding:3px 8px; border-radius:3px; font-size:11px; text-decoration:none;">🔒 Staff Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright Strip -->
+  <div class="footer-copyright">
+    &copy; {% now "Y" %} {{ site_settings.college_name|default:"Government Polytechnic Madhogarh" }}. All Rights Reserved. &bull; Central Library &amp; Digital Resource Portal
+  </div>
+</footer>

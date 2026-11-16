@@ -1,0 +1,107 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Manage Accession Copies: {{ book.title }} | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Manage Physical Inventory Copies</h1>
+    <div class="text-muted small">Title: <strong>{{ book.title }}</strong> by {{ book.author }}</div>
+  </div>
+  <a href="{% url 'dashboard:book_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i> Back to Catalog
+  </a>
+</div>
+
+<div class="row g-4">
+  <!-- Add New Copy Form -->
+  <div class="col-lg-4">
+    <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+      <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle text-primary me-2"></i>Add Accession Copy</h5>
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Accession Number *</label>
+          {{ form.accession_number }}
+          {% if form.accession_number.errors %}<div class="text-danger small">{{ form.accession_number.errors }}</div>{% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Shelf / Rack Location *</label>
+          {{ form.shelf_location }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Current Status *</label>
+          {{ form.status }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Acquisition Date</label>
+          {{ form.acquisition_date }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Price (₹)</label>
+          {{ form.price }}
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary fw-bold">Add Copy to Inventory</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Copies List Table -->
+  <div class="col-lg-8">
+    <div class="card-data-table">
+      <div class="card-data-header">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-collection text-primary me-2"></i>Physical Copies Recorded ({{ copies.count }})</h5>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle small">
+          <thead class="table-light">
+            <tr>
+              <th>Accession No</th>
+              <th>Shelf Location</th>
+              <th>Status</th>
+              <th>Price</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for copy in copies %}
+              <tr>
+                <td><strong><code>{{ copy.accession_number }}</code></strong></td>
+                <td><i class="bi bi-geo-alt text-danger me-1"></i>{{ copy.shelf_location }}</td>
+                <td>
+                  {% if copy.status == 'AVAILABLE' %}
+                    <span class="badge bg-success-subtle text-success">Available on Shelf</span>
+                  {% elif copy.status == 'ISSUED' %}
+                    <span class="badge bg-danger-subtle text-danger">Issued</span>
+                  {% elif copy.status == 'REFERENCE_ONLY' %}
+                    <span class="badge bg-warning-subtle text-warning-emphasis">Reference Only</span>
+                  {% else %}
+                    <span class="badge bg-secondary">{{ copy.get_status_display }}</span>
+                  {% endif %}
+                </td>
+                <td>{% if copy.price %}₹{{ copy.price }}{% else %}-{% endif %}</td>
+                <td class="text-end">
+                  <a href="{% url 'dashboard:copy_delete' pk=copy.id %}" class="btn btn-sm btn-outline-danger py-0 px-2" title="Remove Copy">
+                    <i class="bi bi-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="5" class="text-center py-4 text-muted">No physical copies added for this book yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

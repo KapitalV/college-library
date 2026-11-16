@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Staff & Advisory Committee | Government Polytechnic Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'pages:about' %}">About Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Staff & Committee</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-people-fill me-1"></i> Library Administration</span>
+    <h2>Library Staff & Advisory Committee</h2>
+    <p>Meet our information professionals and the institutional committee guiding library policy and collection development.</p>
+  </div>
+
+  <!-- Staff Members Grid -->
+  <h4 class="fw-bold text-dark mb-3"><i class="bi bi-person-badge-fill text-primary me-2"></i>Library Personnel</h4>
+  <div class="row g-4 mb-5">
+    {% for member in staff_members %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-3 p-4 bg-white text-center d-flex flex-column">
+          <div class="mx-auto mb-3" style="width: 76px; height: 76px; background: var(--lib-teal-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: var(--lib-teal);">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          <h5 class="fw-bold text-dark mb-1">{{ member.name }}</h5>
+          <div class="text-primary small fw-semibold mb-1">{{ member.designation }}</div>
+          {% if member.qualification %}
+            <div class="badge bg-light text-dark border mb-3 align-self-center">{{ member.qualification }}</div>
+          {% endif %}
+          <p class="small text-muted mb-3 flex-grow-1">{{ member.bio }}</p>
+          <div class="border-top pt-2 small text-muted mt-auto">
+            {% if member.email %}<div class="mb-1"><i class="bi bi-envelope me-1"></i>{{ member.email }}</div>{% endif %}
+            {% if member.phone %}<div><i class="bi bi-telephone me-1"></i>{{ member.phone }}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Advisory Committee Table -->
+  <h4 class="fw-bold text-dark mb-3"><i class="bi bi-award-fill text-warning me-2"></i>Institutional Library Advisory Committee (LAC)</h4>
+  <div class="card border-0 shadow-sm rounded-3 overflow-hidden bg-white mb-4">
+    <div class="table-responsive">
+      <table class="table table-academic mb-0">
+        <thead>
+          <tr>
+            <th>Member Name</th>
+            <th>Designation</th>
+            <th>Department / Branch</th>
+            <th>Role in Committee</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for comm in committee %}
+            <tr>
+              <td><strong>{{ comm.name }}</strong></td>
+              <td>{{ comm.designation }}</td>
+              <td>{{ comm.department }}</td>
+              <td><span class="badge bg-primary">{{ comm.committee_role }}</span></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

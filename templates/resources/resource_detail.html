@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ resource.title }} | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'resources:resource_list' %}">Resources</a></li>
+      <li class="breadcrumb-item active text-truncate" aria-current="page">{{ resource.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 mb-5 bg-white">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-8">
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="resource-badge-format format-{{ resource.file_format|lower }} fs-6">{{ resource.get_category_display }}</span>
+          {% if resource.department %}
+            <span class="badge bg-secondary-subtle text-secondary fw-semibold">{{ resource.department.name }}</span>
+          {% endif %}
+          {% if resource.semester %}
+            <span class="badge bg-light text-dark border">Semester {{ resource.semester }}</span>
+          {% endif %}
+          <span class="badge bg-success-subtle text-success">{{ resource.get_access_type_display }}</span>
+        </div>
+
+        <h2 class="fw-bold text-dark mb-3">{{ resource.title }}</h2>
+
+        {% if resource.author_or_faculty %}
+          <div class="text-muted mb-3"><i class="bi bi-person-fill text-primary me-1"></i> Contributed / Issued by: <strong>{{ resource.author_or_faculty }}</strong></div>
+        {% endif %}
+
+        <div class="p-3 bg-light rounded-3 mb-4">
+          <h6 class="fw-bold text-dark mb-2">Resource Description & Academic Scope:</h6>
+          <p class="text-secondary small mb-0">{{ resource.description }}</p>
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <a href="{% url 'resources:download' slug=resource.slug %}" class="btn btn-primary btn-lg fw-bold px-4" target="_blank">
+            <i class="bi bi-download me-1"></i> Access / Download Resource
+          </a>
+          <span class="small text-muted"><i class="bi bi-bar-chart-line me-1"></i> {{ resource.download_count }} Accesses Recorded</span>
+        </div>
+      </div>
+
+      <div class="col-lg-4 text-center">
+        <div class="p-4 border rounded-3 bg-light">
+          <i class="bi bi-file-earmark-arrow-down-fill text-primary" style="font-size: 4rem;"></i>
+          <h6 class="fw-bold mt-2">Document Details</h6>
+          <ul class="list-unstyled text-muted small text-start mb-0 mt-3">
+            <li class="mb-2"><strong>Format:</strong> {{ resource.get_file_format_display }}</li>
+            <li class="mb-2"><strong>Academic Year:</strong> {{ resource.academic_year|default:"Current Session" }}</li>
+            <li class="mb-2"><strong>Access Type:</strong> {{ resource.get_access_type_display }}</li>
+            <li><strong>Updated:</strong> {{ resource.updated_at|date:"M d, Y" }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if related_resources %}
+    <div class="mt-4">
+      <h5 class="fw-bold text-dark mb-3">Related Study Materials in this Department</h5>
+      <div class="row g-3">
+        {% for rel in related_resources %}
+          <div class="col-md-6 col-lg-3">
+            <div class="resource-tile h-100">
+              <span class="resource-badge-format format-{{ rel.file_format|lower }} mb-2 align-self-start">{{ rel.get_category_display }}</span>
+              <h6 class="fw-bold mb-1"><a href="{{ rel.get_absolute_url }}" class="text-dark text-decoration-none">{{ rel.title }}</a></h6>
+              <div class="mt-auto pt-2 border-top">
+                <a href="{{ rel.get_absolute_url }}" class="small text-primary fw-semibold text-decoration-none">View Details &rarr;</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+

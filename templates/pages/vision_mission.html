@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Vision, Mission & Core Values | Government Polytechnic Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'pages:about' %}">About Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Vision & Mission</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white mb-4">
+        <div class="section-header-academic mb-4">
+          <span class="badge-kicker"><i class="bi bi-compass-fill me-1"></i> Strategic Direction</span>
+          <h2>Vision, Mission & Core Objectives</h2>
+          <p>Guiding principles shaping collection development and student support services at Government Polytechnic Madhogarh Central Library.</p>
+        </div>
+
+        <!-- Vision Box -->
+        <div class="p-4 rounded-3 mb-4 text-white" style="background: linear-gradient(135deg, var(--lib-navy) 0%, var(--lib-navy-light) 100%); border-left: 6px solid var(--lib-gold);">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-eye-fill fs-3 text-warning"></i>
+            <h4 class="fw-bold mb-0 text-white">Our Vision</h4>
+          </div>
+          <p class="lead fs-6 mb-0 text-white-50">
+            "To evolve as a benchmark polytechnic knowledge and resource center in Uttar Pradesh, empowering technical students with cutting-edge academic print collections, open digital resources, and inclusive technological learning environments."
+          </p>
+        </div>
+
+        <!-- Mission Box -->
+        <div class="p-4 rounded-3 mb-4 text-white" style="background: linear-gradient(135deg, var(--lib-teal) 0%, var(--lib-teal-dark) 100%); border-left: 6px solid var(--lib-gold);">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-bullseye fs-3 text-warning"></i>
+            <h4 class="fw-bold mb-0 text-white">Our Mission</h4>
+          </div>
+          <ul class="mb-0 text-white-50 small ps-3">
+            <li class="mb-2">To procure, organize, and disseminate standard curriculum textbooks and technical references aligned with BTEUP diploma syllabi.</li>
+            <li class="mb-2">To bridge the digital learning divide by providing free access to the National Digital Library of India, AICTE e-KUMBH portal, and NPTEL online courseware.</li>
+            <li class="mb-2">To foster an academic culture of peaceful reading, critical thinking, and disciplined intellectual curiosity.</li>
+            <li>To deliver user-friendly automated library services with transparency and equity for students and staff.</li>
+          </ul>
+        </div>
+
+        <!-- Core Objectives -->
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-check2-circle text-primary me-2"></i>Core Library Objectives</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3 h-100">
+              <h6 class="fw-bold mb-1">Curricula Alignment</h6>
+              <p class="small text-muted mb-0">Ensure recommended textbooks per diploma subject across Computer Science & Engineering, Electrical Engineering, and Electronics Engineering branches.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3 h-100">
+              <h6 class="fw-bold mb-1">Book Bank Inclusivity</h6>
+              <p class="small text-muted mb-0">Provide full semester textbook sets to economically vulnerable and meritorious diploma scholars.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3 h-100">
+              <h6 class="fw-bold mb-1">Digital Literacy</h6>
+              <p class="small text-muted mb-0">Train 100% of enrolled diploma scholars to navigate online journals, NDLI e-resources, and automated OPAC.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3 h-100">
+              <h6 class="fw-bold mb-1">Examination Support</h6>
+              <p class="small text-muted mb-0">Maintain an updated archive of previous 10 years of BTEUP question papers and model solution banks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

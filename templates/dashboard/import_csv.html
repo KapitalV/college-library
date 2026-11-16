@@ -1,0 +1,54 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Bulk Import Books (CSV) | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Bulk Import Books & Inventory</h1>
+    <div class="text-muted small">Import hundreds of book records and accession numbers via CSV spreadsheet.</div>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'dashboard:export_books_csv' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-download me-1"></i> Download Current Catalog CSV
+    </a>
+    <a href="{% url 'dashboard:book_list' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Back to Catalog
+    </a>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card border-0 shadow-sm rounded-3 p-4 bg-white mb-4">
+      <h5 class="fw-bold mb-3"><i class="bi bi-file-earmark-spreadsheet-fill text-success me-2"></i>Upload CSV File</h5>
+      
+      <div class="alert alert-info py-3 small mb-4">
+        <strong>Expected CSV Columns:</strong><br>
+        <code>AccessionNumber, Title, Author, ISBN, Publisher, Year, Department, Category, Classification, ShelfLocation, Status</code>
+        <div class="mt-2 text-muted">
+          * <code>Title</code> and <code>Author</code> are strictly required. If <code>AccessionNumber</code> is provided, a physical inventory copy is automatically created and linked.
+        </div>
+      </div>
+
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-4">
+          <label class="form-label small fw-bold">Select CSV File (.csv) *</label>
+          {{ form.csv_file }}
+          {% if form.csv_file.errors %}<div class="text-danger small mt-1">{{ form.csv_file.errors }}</div>{% endif %}
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+          <a href="{% url 'dashboard:book_list' %}" class="btn btn-outline-secondary">Cancel</a>
+          <button type="submit" class="btn btn-success fw-bold px-4">
+            <i class="bi bi-upload me-1"></i> Start Bulk Import
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

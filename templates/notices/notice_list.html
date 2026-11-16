@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Notices & Circulars | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Notices & Circulars</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-bell-fill me-1"></i> Current Announcements</span>
+    <h2>Library Notices, Circulars & Student Orders</h2>
+    <p>Official communication regarding library operating hours, membership cards, book bank distributions, and NDLI club directives.</p>
+  </div>
+
+  <!-- Filter Card -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 mb-4 bg-white">
+    <form action="{% url 'notices:notice_list' %}" method="get" class="row g-3 align-items-end">
+      <div class="col-md-5">
+        <label for="noticeQuery" class="form-label small fw-bold text-muted">Search Notices</label>
+        <input type="text" name="q" id="noticeQuery" class="form-control" value="{{ query }}" placeholder="Search title or content...">
+      </div>
+      <div class="col-md-4">
+        <label for="noticeCategory" class="form-label small fw-bold text-muted">Notice Category</label>
+        <select name="category" id="noticeCategory" class="form-select">
+          <option value="">All Categories</option>
+          {% for code, label in categories %}
+            <option value="{{ code }}" {% if selected_category == code %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3 d-grid">
+        <button type="submit" class="btn btn-primary fw-semibold py-2">Filter Notices</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Notices List -->
+  <div class="row g-3 mb-4">
+    {% for notice in page_obj %}
+      <div class="col-lg-6">
+        <div class="notice-row-card {% if notice.priority == 'URGENT' %}notice-urgent{% endif %} h-100 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge {% if notice.priority == 'URGENT' %}badge-urgent{% elif notice.priority == 'HIGH' %}badge-high{% else %}badge-normal{% endif %}">
+                {{ notice.get_category_display }}
+              </span>
+              <span class="notice-meta-date"><i class="bi bi-calendar3 me-1"></i>{{ notice.publish_date|date:"F d, Y" }}</span>
+            </div>
+            <h5 class="fw-bold mb-2">
+              <a href="{{ notice.get_absolute_url }}" class="text-dark text-decoration-none">{{ notice.title }}</a>
+            </h5>
+            <p class="text-secondary small mb-3">
+              {{ notice.short_summary|default:notice.content|truncatewords:28 }}
+            </p>
+          </div>
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+            <a href="{{ notice.get_absolute_url }}" class="text-primary text-decoration-none fw-semibold small">
+              Read Official Notice &rarr;
+            </a>
+            {% if notice.attachment %}
+              <a href="{{ notice.attachment.url }}" target="_blank" class="badge bg-danger-subtle text-danger text-decoration-none px-2 py-1">
+                <i class="bi bi-file-earmark-pdf-fill me-1"></i> Signed Circular
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center py-5">
+        <p class="text-muted">No notices matching your criteria.</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if page_obj.has_other_pages %}
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&category={{ selected_category }}">&laquo; Previous</a></li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}&q={{ query }}&category={{ selected_category }}">{{ num }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&category={{ selected_category }}">Next &raquo;</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}
+

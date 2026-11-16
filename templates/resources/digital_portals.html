@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}National Educational Portals Guide | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'digital_library:home' %}">Digital Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Educational Portals</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-globe2 me-1"></i> National Academic Gateways</span>
+    <h2>National Educational & Research Portals</h2>
+    <p>Comprehensive guide to government-sponsored e-learning platforms accessible to polytechnic students and faculty.</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Portal 1: NDLI -->
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="quick-action-icon m-0"><i class="bi bi-book"></i></div>
+          <div>
+            <h5 class="fw-bold mb-0 text-dark">National Digital Library of India (NDLI)</h5>
+            <span class="badge bg-success-subtle text-success">Ministry of Education & IIT Kharagpur</span>
+          </div>
+        </div>
+        <p class="text-secondary small mb-3">
+          NDLI is a virtual repository of learning resources containing over 9.5 crore educational items including textbooks, simulation models, conference papers, video lectures, and rare manuscripts.
+        </p>
+        <div class="bg-light p-3 rounded-2 mb-3 small">
+          <strong>Access Classification:</strong> Open Access + Institutional Club Member<br>
+          <strong>Format:</strong> Full-text PDF, Video Lectures, Interactive Datasets<br>
+          <strong>Club Registration:</strong> Supported by GP Madhogarh Institutional Club Passkey
+        </div>
+        <div class="d-flex gap-2 mt-auto">
+          <a href="{{ settings.ndli_portal_url|default:'https://ndl.iitkgp.ac.in/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm fw-semibold">
+            Visit NDLI Portal <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+          <a href="{% url 'services:ndli_club' %}" class="btn btn-outline-primary btn-sm fw-semibold">
+            View Registration Guide
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portal 2: e-KUMBH -->
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="quick-action-icon m-0"><i class="bi bi-translate"></i></div>
+          <div>
+            <h5 class="fw-bold mb-0 text-dark">AICTE e-KUMBH Portal</h5>
+            <span class="badge bg-info-subtle text-info">All India Council for Technical Education</span>
+          </div>
+        </div>
+        <p class="text-secondary small mb-3">
+          e-KUMBH (Knowledge Unleashed in Multiple Bharatiya Languages) delivers high quality engineering & diploma course textbooks translated into Hindi, Marathi, Bengali, Tamil, Telugu, and other Indian languages.
+        </p>
+        <div class="bg-light p-3 rounded-2 mb-3 small">
+          <strong>Access Classification:</strong> Free Public Access (AICTE Initiative)<br>
+          <strong>Target:</strong> Polytechnic Diploma & B.Tech Students<br>
+          <strong>Languages:</strong> Hindi, English, and 10 Indian Regional Languages
+        </div>
+        <div class="mt-auto">
+          <a href="{{ settings.ekumbh_url|default:'https://ekumbh.aicte-india.org/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm fw-semibold">
+            Access e-KUMBH Portal <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portal 3: e-Granthalaya -->
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="quick-action-icon m-0"><i class="bi bi-diagram-3"></i></div>
+          <div>
+            <h5 class="fw-bold mb-0 text-dark">e-Granthalaya 4.0 (EG4)</h5>
+            <span class="badge bg-primary-subtle text-primary">National Informatics Centre (NIC)</span>
+          </div>
+        </div>
+        <p class="text-secondary small mb-3">
+          e-Granthalaya 4.0 is a cloud-based library management platform developed by NIC to network government institutional libraries into a national union catalogue.
+        </p>
+        <div class="bg-light p-3 rounded-2 mb-3 small">
+          <strong>Access Classification:</strong> Public OPAC + Staff Intranet<br>
+          <strong>Features:</strong> Union catalogue search, standard AACR2 / MARC-21 cataloging<br>
+          <strong>Hosting:</strong> National Informatics Centre Cloud, New Delhi
+        </div>
+        <div class="mt-auto">
+          <a href="{{ settings.egranthalaya_url|default:'http://eg4.nic.in/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm fw-semibold">
+            Visit e-Granthalaya <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portal 4: SWAYAM / NPTEL -->
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="quick-action-icon m-0"><i class="bi bi-mortarboard"></i></div>
+          <div>
+            <h5 class="fw-bold mb-0 text-dark">SWAYAM & NPTEL MOOCs</h5>
+            <span class="badge bg-warning-subtle text-warning-emphasis">Ministry of Education & IITs</span>
+          </div>
+        </div>
+        <p class="text-secondary small mb-3">
+          SWAYAM hosts online courses from school level to post-graduate level, created by top educators from IITs, IIMs, and central universities with credit-transfer provisions.
+        </p>
+        <div class="bg-light p-3 rounded-2 mb-3 small">
+          <strong>Access Classification:</strong> Free Course Audit & Study Materials<br>
+          <strong>Certification:</strong> Proctored exam with government-recognized certificate<br>
+          <strong>Subjects:</strong> Engineering, Mathematics, Computer Programming, Humanities
+        </div>
+        <div class="mt-auto">
+          <a href="{{ settings.swayam_url|default:'https://swayam.gov.in/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm fw-semibold">
+            Visit SWAYAM Portal <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

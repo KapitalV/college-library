@@ -1,0 +1,94 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}User Feedback & Reviews | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">User Feedback & Suggestions</h1>
+    <div class="text-muted small">Read student and faculty feedback, ratings, and quality observations.</div>
+  </div>
+</div>
+
+<div class="card-data-table mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle small">
+      <thead class="table-light">
+        <tr>
+          <th>User</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Rating</th>
+          <th>Subject & Message</th>
+          <th>Status</th>
+          <th class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fb in page_obj %}
+          <tr>
+            <td>
+              <div class="fw-bold text-dark">{{ fb.name }}</div>
+              <div class="text-muted small">{{ fb.email }}</div>
+            </td>
+            <td><span class="badge bg-light text-dark border">{{ fb.get_user_type_display }}</span></td>
+            <td>{{ fb.get_category_display }}</td>
+            <td class="text-warning fw-bold">{{ fb.rating }} ★</td>
+            <td style="max-width: 280px;">
+              <div class="fw-semibold text-dark">{{ fb.subject|default:"General Feedback" }}</div>
+              <div class="text-secondary small">{{ fb.message|truncatewords:15 }}</div>
+            </td>
+            <td>
+              {% if fb.is_reviewed %}
+                <span class="badge bg-success">Reviewed</span>
+              {% else %}
+                <span class="badge bg-warning text-dark">New</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fbModal{{ fb.id }}">
+                View
+              </button>
+            </td>
+          </tr>
+
+          <!-- Modal for feedback -->
+          <div class="modal fade" id="fbModal{{ fb.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form action="{% url 'dashboard:feedback' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="feedback_id" value="{{ fb.id }}">
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Feedback from {{ fb.name }} ({{ fb.rating }} ★)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-2"><strong>Category:</strong> {{ fb.get_category_display }}</div>
+                    <div class="mb-2"><strong>Subject:</strong> {{ fb.subject|default:"No Subject" }}</div>
+                    <div class="p-3 bg-light rounded-2 small text-secondary mb-3">
+                      {{ fb.message }}
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Admin Response / Internal Notes</label>
+                      <textarea name="admin_response" class="form-control" rows="3">{{ fb.admin_response }}</textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold">Mark as Reviewed</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        {% empty %}
+          <tr><td colspan="7" class="text-center py-4 text-muted">No feedback submissions received yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

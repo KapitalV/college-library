@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Frequently Asked Questions (FAQ) | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'pages:about' %}">About Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">FAQs</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="section-header-academic mb-4">
+        <span class="badge-kicker"><i class="bi bi-question-circle-fill me-1"></i> Help & Guidance</span>
+        <h2>Frequently Asked Questions (FAQs)</h2>
+        <p>Find quick answers regarding membership cards, loan allowances, NDLI passkey, and examination archives.</p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        <a href="{% url 'pages:faq' %}" class="btn btn-sm {% if not selected_category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+          All Questions
+        </a>
+        {% for code, label in categories %}
+          <a href="{% url 'pages:faq' %}?category={{ code }}" class="btn btn-sm {% if selected_category == code %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            {{ label }}
+          </a>
+        {% endfor %}
+      </div>
+
+      <!-- Accordion -->
+      <div class="accordion accordion-flush shadow-sm rounded-3 overflow-hidden bg-white border" id="faqAccordion">
+        {% for faq in faqs %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ faq.id }}">
+              <button class="accordion-button {% if not forloop.first %}collapsed{% endif %} fw-bold text-dark py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ faq.id }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ faq.id }}">
+                <span class="badge bg-secondary-subtle text-secondary me-2 small">{{ faq.get_category_display }}</span>
+                {{ faq.question }}
+              </button>
+            </h2>
+            <div id="collapse{{ faq.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ faq.id }}" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-secondary small py-3" style="line-height: 1.7;">
+                {{ faq.answer }}
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="p-4 text-center text-muted">No FAQs found in this category.</div>
+        {% endfor %}
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-light mt-4 text-center">
+        <h6 class="fw-bold mb-1">Didn't find what you were looking for?</h6>
+        <p class="small text-muted mb-3">Our library staff is available during working hours to assist you.</p>
+        <div class="d-flex justify-content-center gap-2">
+          <a href="{% url 'core:contact' %}" class="btn btn-primary btn-sm">Contact Librarian &rarr;</a>
+          <a href="{% url 'feedback:feedback' %}" class="btn btn-outline-secondary btn-sm">Submit Question</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

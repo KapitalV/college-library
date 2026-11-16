@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Services & Lending Policies | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Library Services</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-gear-fill me-1"></i> Student & Faculty Support</span>
+    <h2>Library Services & Facilities</h2>
+    <p>Comprehensive academic and digital information services supporting learning, study, and technical education at GP Madhogarh Madhogarh.</p>
+  </div>
+
+  <!-- Key Services Grid -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+        <div class="quick-action-icon"><i class="bi bi-arrow-left-right"></i></div>
+        <h5 class="fw-bold mb-2">Circulation Service</h5>
+        <p class="text-secondary small mb-3">Lending, return, and renewal of curricula textbooks using student membership cards and library records.</p>
+        <a href="{% url 'services:membership' %}" class="btn btn-sm btn-outline-primary mt-auto">Apply for Card &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+        <div class="quick-action-icon"><i class="bi bi-search"></i></div>
+        <h5 class="fw-bold mb-2">OPAC Catalogue Discovery</h5>
+        <p class="text-secondary small mb-3">Search books by Title, Author, Subject, Accession Number, or Rack location powered by our integrated catalogue system.</p>
+        <a href="{% url 'catalog:search' %}" class="btn btn-sm btn-outline-primary mt-auto">Open OPAC &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+        <div class="quick-action-icon"><i class="bi bi-collection"></i></div>
+        <h5 class="fw-bold mb-2">Book Bank Facility</h5>
+        <p class="text-secondary small mb-3">Special scheme providing sets of textbooks to eligible diploma students for the entire semester duration without recurring fees.</p>
+        <a href="{% url 'services:forms' %}" class="btn btn-sm btn-outline-primary mt-auto">Download Form &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+        <div class="quick-action-icon"><i class="bi bi-laptop"></i></div>
+        <h5 class="fw-bold mb-2">Digital Library & NDLI Club</h5>
+        <p class="text-secondary small mb-3">Seamless access to National Digital Library of India (NDLI), AICTE e-KUMBH portal, and SWAYAM/NPTEL online video lectures.</p>
+        <a href="{% url 'services:ndli_club' %}" class="btn btn-sm btn-outline-primary mt-auto">NDLI Passkey &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+        <div class="quick-action-icon"><i class="bi bi-newspaper"></i></div>
+        <h5 class="fw-bold mb-2">Newspapers & Periodicals</h5>
+        <p class="text-secondary small mb-3">Daily national Hindi & English newspapers, engineering technical magazines, and competition journals in the quiet reading hall.</p>
+        <a href="{% url 'pages:facilities' %}" class="btn btn-sm btn-outline-primary mt-auto">Reading Hall &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm rounded-3 p-4">
+        <div class="quick-action-icon"><i class="bi bi-file-earmark-check"></i></div>
+        <h5 class="fw-bold mb-2">Clearance & No-Dues</h5>
+        <p class="text-secondary small mb-3">Issuance of formal library clearance / No-Dues Certificates to final-year diploma scholars upon completion or transfer.</p>
+        <a href="{% url 'services:no_dues' %}" class="btn btn-sm btn-outline-primary mt-auto">Clearance Rules &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verified Borrowing Allowances Table -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 mb-5 bg-white">
+    <h4 class="fw-bold text-dark mb-3"><i class="bi bi-card-checklist text-primary me-2"></i>Borrowing Entitlement & Loan Period (Official Policy)</h4>
+    <p class="text-muted small mb-3">As per institutional library regulations, verified for Government Polytechnic Madhogarh:</p>
+    <div class="table-responsive">
+      <table class="table table-academic mb-0">
+        <thead>
+          <tr>
+            <th>Member Category</th>
+            <th>No. of Books Allowed</th>
+            <th>Loan / Issue Period</th>
+            <th>Renewal Policy</th>
+            <th>Overdue Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Diploma Students</strong></td>
+            <td><span class="badge bg-primary">2 Books</span></td>
+            <td>14 Days</td>
+            <td>One renewal if not reserved by another reader</td>
+            <td>Rs. 1 / day overdue fine after grace period</td>
+          </tr>
+          <tr>
+            <td><strong>Faculty / Teaching Staff</strong></td>
+            <td><span class="badge bg-success">5 Books</span></td>
+            <td>30 Days</td>
+            <td>Renewable for semester research needs</td>
+            <td>Must return before end of academic semester</td>
+          </tr>
+          <tr>
+            <td><strong>Non-Teaching Staff</strong></td>
+            <td><span class="badge bg-info">2 Books</span></td>
+            <td>14 Days</td>
+            <td>Renewable once</td>
+            <td>Return upon notification</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Quick Online Services Links -->
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-light">
+        <h5 class="fw-bold text-dark mb-2"><i class="bi bi-bookmark-plus text-primary me-2"></i>Recommend a Book</h5>
+        <p class="small text-muted mb-3">Need a specialized textbook or engineering reference handbook not currently in our catalog? Submit a procurement recommendation.</p>
+        <a href="{% url 'services:book_recommend' %}" class="btn btn-outline-primary btn-sm fw-semibold">Submit Book Recommendation &rarr;</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-light">
+        <h5 class="fw-bold text-dark mb-2"><i class="bi bi-question-diamond text-danger me-2"></i>Request Study Material</h5>
+        <p class="small text-muted mb-3">Looking for a specific past BTEUP examination paper, lab manual, or chapter handout? Request the library staff to upload it.</p>
+        <a href="{% url 'services:resource_request' %}" class="btn btn-outline-danger btn-sm fw-semibold">Submit Resource Request &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

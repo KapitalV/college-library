@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Academic Departments | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Departments</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-diagram-3-fill me-1"></i> Polytechnic Disciplines</span>
+    <h2>Academic Departments & Resource Portals</h2>
+    <p>Explore dedicated branch repositories containing semester curricula, textbooks, question banks, and faculty notes.</p>
+  </div>
+
+  <div class="row g-4 mb-5">
+    {% for dept in departments %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden d-flex flex-column">
+          <div class="p-4 bg-navy text-white" style="background-color: var(--lib-navy);">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-warning text-dark fw-bold">{{ dept.code }}</span>
+              <span class="small text-white-50"><i class="bi bi-people-fill"></i> Intake: {{ dept.intake_capacity }} Seats</span>
+            </div>
+            <h4 class="fw-bold text-white mb-1">{{ dept.name }}</h4>
+            <div class="small text-white-50">3 Years Diploma Program &bull; BTEUP</div>
+          </div>
+          <div class="card-body p-4 d-flex flex-column flex-grow-1">
+            <p class="text-secondary small mb-3 flex-grow-1">{{ dept.description }}</p>
+            <div class="bg-light p-3 rounded-2 small text-muted mb-3">
+              <div class="mb-1"><i class="bi bi-person-fill text-primary me-1"></i> <strong>HOD:</strong> {{ dept.head_of_department|default:"Department In-Charge" }}</div>
+              <div><i class="bi bi-journal-check text-success me-1"></i> <strong>Curricula Subjects:</strong> {{ dept.subjects.count }} Mapped Courses</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+              <a href="{{ dept.get_absolute_url }}" class="btn btn-primary btn-sm fw-semibold w-100">
+                Explore {{ dept.code }} Hub <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

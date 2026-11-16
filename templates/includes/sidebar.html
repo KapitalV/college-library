@@ -1,0 +1,272 @@
+{% load static %}
+<!-- ================= SIDEBAR WIDGETS ================= -->
+
+<!-- 1. Contact Us Widget -->
+<div class="widget-box" id="contact-section">
+  <h3 class="widget-title">CONTACT US</h3>
+  <div class="contact-info-item">
+    <span class="ci-icon">📍</span>
+    <div>
+      <strong>Address:</strong><br>
+      {{ site_settings.campus_location|default:"Kailor, Madhogarh" }}, {{ site_settings.district|default:"Jalaun" }} &ndash; {{ site_settings.postal_code|default:"285126" }}, Uttar Pradesh
+    </div>
+  </div>
+  <div class="contact-info-item">
+    <span class="ci-icon">📧</span>
+    <div>
+      <strong>Email:</strong><br>
+      <a href="mailto:{{ site_settings.library_email|default:'govt.polytechnic.madhogarh@gmail.com' }}" style="color:#0d47a1; text-decoration:none;">
+        {{ site_settings.library_email|default:"govt.polytechnic.madhogarh@gmail.com" }}
+      </a>
+    </div>
+  </div>
+  <div class="contact-info-item">
+    <span class="ci-icon">📞</span>
+    <div>
+      <strong>Phone:</strong><br>
+      <a href="tel:{{ site_settings.contact_phone|default:'9305574396' }}" style="color:#0d47a1; text-decoration:none;">
+        {{ site_settings.contact_phone|default:"9305574396" }}
+      </a>
+    </div>
+  </div>
+  <div class="contact-info-item" style="margin-top:6px; font-size:12px; color:#555;">
+    <span class="ci-icon">🕒</span>
+    <div>
+      <strong>Library Hours:</strong><br>
+      {{ site_settings.opening_hours_weekday|default:"Mon - Sat: 10:00 AM - 05:00 PM" }}
+    </div>
+  </div>
+</div>
+
+<!-- 2. Library Membership Widget -->
+<div class="widget-box" id="HTML4">
+  <h3 class="widget-title">Library Membership</h3>
+  <div style="text-align: center; margin: 15px 0;">
+    <a href="{% url 'services:membership' %}" class="membership-btn">
+      📝 Apply for Library Membership
+    </a>
+  </div>
+</div>
+
+<!-- 3. NDLI Club Registration Widget -->
+<div class="widget-box" id="HTML5">
+  <h3 class="widget-title">NDLI Club Registration</h3>
+  <div style="text-align: center; margin: 10px 0;">
+    <button type="button" class="ndli-btn" onclick="openNdliModal()">
+      🌐 NDLI Club Membership Registration
+    </button>
+  </div>
+</div>
+
+<!-- NDLI Club Registration Modal Popup -->
+<div id="ndliModal" class="ndli-modal-overlay" onclick="handleNdliBackdropClick(event)">
+  <div class="ndli-modal-box">
+    <!-- Header -->
+    <div class="ndli-modal-header">
+      <h4>🏛️ NDLI Club Membership Registration Guide</h4>
+      <button type="button" class="ndli-modal-close" onclick="closeNdliModal()" aria-label="Close modal">&times;</button>
+    </div>
+    
+    <!-- Body -->
+    <div class="ndli-modal-body">
+      <!-- Important Notice Box -->
+      <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 15px; border-radius: 4px; margin-bottom: 16px;">
+        <p style="color: #856404; font-size: 13px; font-weight: bold; margin: 0; line-height: 1.5;">
+          ⚠️ <strong>महत्वपूर्ण सूचना:</strong> संयुक्त निदेशक, बुंदेलखंड क्षेत्र के आदेशानुसार Government Polytechnic Madhogarh, Jalaun के सभी छात्र-छात्राओं के लिए "नेशनल डिजिटल लाइब्रेरी ऑफ इंडिया" (NDLI) Club का सदस्य बनना अनिवार्य है।
+        </p>
+      </div>
+
+      <!-- Step 1 Section -->
+      <div style="margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #eeeeee;">
+        <h5 style="color: #198754; font-size: 15px; margin-top: 0; margin-bottom: 8px;">
+          1️⃣ प्रथम चरण: NDLI Portal पर अकाउंट बनाएं
+        </h5>
+        <ul style="font-size: 13px; color: #333333; line-height: 1.6; margin: 0 0 12px 20px; padding: 0;">
+          <li>नीचे दिए गए हरे बटन पर क्लिक करके Registration Page खोलें।</li>
+          <li>अपनी सभी आवश्यक जानकारी (Name, Education details, etc.) दर्ज करें।</li>
+          <li><strong>ध्यान दें:</strong> वही Email ID डालें जो पूरी तरह से सक्रिय (Active) हो।</li>
+          <li>पंजीकरण के बाद आपके Email पर NDLI की तरफ से Verification Link आएगा, उस पर क्लिक करके अपना अकाउंट एक्टिवेट करें।</li>
+        </ul>
+        <a href="https://ndl.iitkgp.ac.in/account/registration" target="_blank" rel="noopener noreferrer" style="background-color: #198754; color: #ffffff; padding: 8px 16px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; display: inline-block;">
+          👉 Step 1: Portal Registration Page खोलें
+        </a>
+      </div>
+
+      <!-- Step 2 Section -->
+      <div>
+        <h5 style="color: #0d6efd; font-size: 15px; margin-top: 0; margin-bottom: 8px;">
+          2️⃣ द्वितीय चरण: NDLI Club से जुड़ें
+        </h5>
+        <ul style="font-size: 13px; color: #333333; line-height: 1.6; margin: 0 0 12px 20px; padding: 0;">
+          <li>Email Verify करने के बाद नीचे दिए गए नीले बटन पर क्लिक करें।</li>
+          <li><strong>Passkey Code:</strong> Sign-Up करते समय Passkey वाले विकल्प में यह कोड भरें:</li>
+        </ul>
+        
+        <!-- Passkey Box -->
+        <div class="ndli-passkey-box">
+          <span>GP Madhogarh NDLI Passkey Code:</span>
+          <strong>d3a479f5-9822-4888-a86e-eb91d907c873</strong>
+        </div>
+
+        <p style="font-size: 13px; color: #333333; line-height: 1.5; margin-top: 0; margin-bottom: 12px;">
+          इसके बाद वही Verified Email ID दर्ज करके फॉर्म Submit कर दें। आपका रजिस्ट्रेशन सफलतापूर्वक पूर्ण हो जाएगा।
+        </p>
+
+        <a href="https://club.ndl.iitkgp.ac.in/sign-up" target="_blank" rel="noopener noreferrer" style="background-color: #0d6efd; color: #ffffff; padding: 8px 16px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; display: inline-block;">
+          👉 Step 2: Passkey दर्ज करके Club Join करें
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Search Library Catalogue (OPAC) Widget -->
+<div class="widget-box" id="HTML2">
+  <h3 class="widget-title">Search Library Catalogue</h3>
+  <div style="background: #f9f9f9; padding: 14px; border: 1px solid #1b5e20; border-radius: 8px; text-align: center;">
+    <form action="{% url 'catalog:search' %}" method="get" class="opac-form">
+      <label for="sideBookSearch" style="font-size: 13px; font-weight: bold; color: #2c3e50; display: block; margin-bottom: 8px; text-align:left;">
+        Enter Book Title / Author Name:
+      </label>
+      <input type="text" id="sideBookSearch" name="q" placeholder="e.g. Applied Physics, R.K. Jain..." required autocomplete="off" />
+      <button type="submit">
+        Search Catalogue (OPAC)
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- 5. New Arrivals & Donations Widget -->
+<div class="widget-box" id="HTML3">
+  <h3 class="widget-title">New Arrivals &amp; Donations</h3>
+  <div style="font-family:Arial,sans-serif; color:#2c3e50; border:1px solid #1b5e20; border-radius:8px; padding:12px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.05);">
+
+    <!-- Faculty Book Donation Banner -->
+    <div style="background:linear-gradient(135deg,#1b5e20,#2e7d32); color:#fff; padding:10px; border-radius:6px; text-align:center; margin-bottom:14px;">
+      <strong style="font-size:13px; display:block; margin-bottom:4px;">🎉 Faculty Book Donation</strong>
+      <span style="font-size:12px; opacity:0.95;">Heartfelt thanks to our esteemed donors</span>
+      <div style="margin-top:8px; padding-top:7px; border-top:1px dashed rgba(255,255,255,.5); text-align:left; font-size:12px; line-height:1.7;">
+        &#8226; <strong>Shri O. P. Yadav</strong> (Principal)<br/>
+        &#8226; <strong>Mrs. Priyanka Singh Dangi</strong> (Librarian)<br/>
+        &#8226; <strong>Computer Science &amp; Engg. Faculty</strong><br/>
+        &#8226; <strong>Electrical &amp; Electronics Engg. Faculty</strong>
+      </div>
+    </div>
+
+    <!-- New Arrivals -->
+    <div style="background:#e8f5e9; border:1px solid #a5d6a7; border-radius:7px; padding:10px; margin-bottom:14px;">
+      <div style="text-align:center; color:#1b5e20; font-size:14px; font-weight:bold; margin-bottom:4px;">
+        📚 नई पुस्तकों का आगमन
+      </div>
+      <p style="font-size:11px; text-align:center; margin:0 0 10px; line-height:1.5;">
+        विद्यार्थियों के लिए नई पुस्तकें &mdash; पढ़िए, सीखिए और आगे बढ़िए!
+      </p>
+
+      <div class="books-grid">
+        <!-- Book 1 -->
+        <div style="border:1px solid #d8e6d9; background:#fff; border-radius:5px; padding:6px; text-align:center;">
+          <div class="book-card-placeholder">📖</div>
+          <div style="font-size:11px; font-weight:bold; color:#1b5e20;">Attitude Is Everything</div>
+          <div style="font-size:10px; color:#555;">Jeff Keller</div>
+          <div style="font-size:10px; color:#777; margin-top:2px;">सकारात्मक सोच</div>
+        </div>
+
+        <!-- Book 2 -->
+        <div style="border:1px solid #d8e6d9; background:#fff; border-radius:5px; padding:6px; text-align:center;">
+          <div class="book-card-placeholder">📘</div>
+          <div style="font-size:11px; font-weight:bold; color:#1b5e20;">Atomic Habits</div>
+          <div style="font-size:10px; color:#555;">James Clear</div>
+          <div style="font-size:10px; color:#777; margin-top:2px;">अच्छी आदतें</div>
+        </div>
+
+        <!-- Book 3 -->
+        <div style="border:1px solid #d8e6d9; background:#fff; border-radius:5px; padding:6px; text-align:center;">
+          <div class="book-card-placeholder">📕</div>
+          <div style="font-size:11px; font-weight:bold; color:#1b5e20;">The Alchemist</div>
+          <div style="font-size:10px; color:#555;">Paulo Coelho</div>
+          <div style="font-size:10px; color:#777; margin-top:2px;">सपने और लक्ष्य</div>
+        </div>
+
+        <!-- Book 4 -->
+        <div style="border:1px solid #d8e6d9; background:#fff; border-radius:5px; padding:6px; text-align:center;">
+          <div class="book-card-placeholder">📗</div>
+          <div style="font-size:11px; font-weight:bold; color:#1b5e20;">Rich Dad Poor Dad</div>
+          <div style="font-size:10px; color:#555;">Robert T. Kiyosaki</div>
+          <div style="font-size:10px; color:#777; margin-top:2px;">वित्तीय शिक्षा</div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:10px;">
+        <a href="{% url 'catalog:new_arrivals' %}" style="display:block; background:#1b5e20; color:#fff; text-decoration:none; padding:7px 8px; border-radius:4px; font-size:11px; font-weight:bold;">
+          VIEW ALL NEW ARRIVALS
+        </a>
+      </div>
+    </div>
+
+    <!-- Biographies Section -->
+    <strong style="color:#1b5e20; display:block; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:5px; margin-bottom:10px;">
+      📚 Newly Arrived Biographies
+    </strong>
+
+    <div class="biography-grid">
+      <!-- 1. Mark Zuckerberg -->
+      <div style="border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia4JbPsQS5TSqOwVuTs8rUH5bbdslfep9xvCemz2VQ-3A6Uj0JQcyxUn-1iRBI28x0py_sbFN-X-az3ACKFodC9jzDf0a9q1QKZudsrV_UlAe2erPn4kkA5iFmVDGvB5a5KbXeaxDEpG6PdyVSFKNuS0V61qBnm9PhqX-42E1hkHCmYXtgcRma3JRw49Ye/s320/mz.jpg" alt="Mark Zuckerberg biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">MZ</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">मार्क ज़ुकरबर्ग</p>
+      </div>
+
+      <!-- 2. Ratan Tata -->
+      <div style="border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJZS7tr_tvfPSHVUGESMMbbAYPWPMtRnEEEWB3qBOcSCeV09pqb3rBWIU4bbOVbnm9T35NhVJwCT90t4yKX09AN2vPs2YN5rVKES6Th8F5VgIXJDR_IOj25ZhHvUVgh0u0PW05MP0M4nFSLkaLMfTIf1fAVkh-oq0MhucI_iadnH8RdGgUzxsLkI8nor5q/s410/rt.jpg" alt="Ratan Tata biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">RT</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">रतन टाटा</p>
+      </div>
+
+      <!-- 3. Bill Gates -->
+      <div style="border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEje9z0YuWMg4qKAWmNMXjjTnoE8V5WU-FFPR0lpKUqOaPUTfUAGFzzexJzr4U65fAH1zFX4jYnpUqvsXlexx1f2q_N0UyXq6Lpl1ZATq49ApF-Rb0bSTvSfiMovDyk7MFGaRfZTOTW3WWz2ChQYS0Xa1ybd4vgoVzblL_h3C4_J7sUh2YDC_BUDdXoFrpgX/s410/vg.jpg" alt="Bill Gates biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">BG</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">बिल गेट्स</p>
+      </div>
+
+      <!-- 4. Jeff Bezos -->
+      <div style="border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjUoWJI5jBaZW-imuuGQLLU5uGkGeenRSnZIp6uO-i-qweBTYJYSVB7bSo3byt7YwErVb11EKXZOGYtJpNIISRH2k6Z-gkGFt7a4s2nCiGbyDoQUne8Z2KHTpdcbkObX-zrncXgOu60gR2i-HxPAVXW7unHe_fd6pyBIPIVrSPrO_pmNQBhaG8-JbINL37y/s330/jb.jpg" alt="Jeff Bezos biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">JB</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">जेफ़ बेज़ोस</p>
+      </div>
+
+      <!-- 5. Sundar Pichai -->
+      <div style="border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhxpOTsq7_Sh7Wgc759BTqWd5FVuxad6cadcxh0VXR82kFSv3RfRXAtvugai1G7DY6DQIKnlEkNlbDkSJC897IjGWdG9WV_HyBdLGJ8V333LiHCLjWYkJao21wfv8XoEWiBa5roBZL-DWOYWmIaKWtHdzAPtjcdZ6nGgMYfDxBVzemdz5_7rFY9G3Oj2c9R/s320/sp.jpg" alt="Sundar Pichai biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">SP</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">सुंदर पिचाई</p>
+      </div>
+
+      <!-- 6. Warren Buffett -->
+      <div style="border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigkeljXlgrZ6GS0DWVs16VPXGcJ9rgnyytz7n-ifEuE1Y0pw51Qf2u0rMKhTbgl-872vArpj4gTDZ6hiqPdTVEOgUCt2oHV0lNKJzNC5Th8dLAI2BTui6q7cv5i0jK5pJTNQPLo1mrsy5sNfAe0iVZr_TwdDJzTgII_aLFfHFCONSHDHyWPin1xyTn-7Ci/s330/Code_Generated_Image.jpg" alt="Warren Buffett biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">WB</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">वॉरेन बफ़े</p>
+      </div>
+
+      <!-- 7. Steve Jobs -->
+      <div style="grid-column:span 2; border:1px solid #e2e8f0; padding:6px; border-radius:4px; background:#fafafa; width:55%; justify-self:center; text-align:center;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizL8pCqjzaTl3zFUj88kNQnzdcEUYub_XQaQbpiyvcV7fGaOiRLMqYdLR1rj9xep6k0Bh3j8i-H05XG-2zaqxAP6UPtygyN3j66Y846rFKvpT3KdYSyIfpio0DLV_9-aNxAqHzWb_VB6EA8jqKgsyLmNzXYIgRyey8cTbfuJeJZoWm-_AUzP4BuXuW3WXV/s320/sj.jpg" alt="Steve Jobs biography" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:auto; border-radius:3px; display:block;"/>
+        <div class="bio-card-placeholder" style="display:none;">SJ</div>
+        <p style="font-size:11px; font-weight:bold; margin:4px 0 0; color:#1b5e20;">स्टीव जॉब्स</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Digital Library Button Widget -->
+<div class="widget-box" id="HTML1">
+  <div style="text-align: center;">
+    <a href="{% url 'digital_library:home' %}" class="digital-lib-btn">
+      📚 DIGITAL LIBRARY 📖
+    </a>
+  </div>
+</div>
+

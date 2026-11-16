@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Online Public Access Catalogue (OPAC) | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <!-- Breadcrumbs -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Book Catalogue (OPAC)</li>
+    </ol>
+  </nav>
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div class="section-header-academic mb-0">
+      <span class="badge-kicker"><i class="bi bi-search me-1"></i> Library Inventory</span>
+      <h2>Online Public Access Catalogue (OPAC)</h2>
+      <p>Search over {{ total_results }} catalogued engineering textbooks, reference volumes, and handbooks.</p>
+    </div>
+    <div class="d-flex gap-2 mt-2 mt-md-0">
+      <a href="{% url 'catalog:new_arrivals' %}" class="btn btn-outline-warning text-dark fw-semibold">
+        <i class="bi bi-stars"></i> New Arrivals
+      </a>
+      <a href="{% url 'catalog:donations' %}" class="btn btn-outline-danger fw-semibold">
+        <i class="bi bi-heart-fill"></i> Donated Books
+      </a>
+    </div>
+  </div>
+
+  <!-- Search & Multi-Filter Form -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 mb-4 bg-white">
+    <form action="{% url 'catalog:search' %}" method="get" class="row g-3">
+      <div class="col-lg-5 col-md-12">
+        <label for="opacQuery" class="form-label small fw-bold text-muted">Keyword Search</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+          <input type="text" name="q" id="opacQuery" class="form-control" value="{{ query }}" placeholder="Search by Title, Author, ISBN, or Accession No...">
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <label for="opacDept" class="form-label small fw-bold text-muted">Engineering Department</label>
+        <select name="department" id="opacDept" class="form-select">
+          <option value="">All Departments</option>
+          {% for d in departments %}
+            <option value="{{ d.id }}" {% if selected_dept == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }} ({{ d.code }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <label for="opacCat" class="form-label small fw-bold text-muted">Book Category</label>
+        <select name="category" id="opacCat" class="form-select">
+          <option value="">All Categories</option>
+          {% for c in categories %}
+            <option value="{{ c.id }}" {% if selected_cat == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <label for="opacSort" class="form-label small fw-bold text-muted">Sort By</label>
+        <select name="sort" id="opacSort" class="form-select">
+          <option value="-id" {% if sort_by == '-id' %}selected{% endif %}>Latest Added</option>
+          <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Title (A - Z)</option>
+          <option value="-title" {% if sort_by == '-title' %}selected{% endif %}>Title (Z - A)</option>
+          <option value="author" {% if sort_by == 'author' %}selected{% endif %}>Author</option>
+          <option value="-publication_year" {% if sort_by == '-publication_year' %}selected{% endif %}>Year (Newest)</option>
+        </select>
+      </div>
+
+      <div class="col-12 d-flex flex-wrap justify-content-between align-items-center pt-2 border-top">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="available" value="1" id="availableCheck" {% if available_only %}checked{% endif %}>
+          <label class="form-check-label small fw-semibold" for="availableCheck">
+            Show only currently available books (on shelf)
+          </label>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="{% url 'catalog:search' %}" class="btn btn-outline-secondary btn-sm">Reset Filters</a>
+          <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold">Apply Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Search Results Count -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="text-muted small">
+      Showing <strong>{{ page_obj.start_index|default:0 }}</strong> to <strong>{{ page_obj.end_index|default:0 }}</strong> of <strong>{{ total_results }}</strong> records
+    </div>
+    {% if query %}
+      <span class="badge bg-light text-dark border">Query: "{{ query }}"</span>
+    {% endif %}
+  </div>
+
+  <!-- Books Grid -->
+  <div class="row g-4 mb-4">
+    {% for book in page_obj %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card-book">
+          <div class="book-cover-placeholder">
+            <i class="bi bi-book book-icon"></i>
+            <div class="book-title-mini">{{ book.title }}</div>
+            {% if book.is_new_arrival %}
+              <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2 fw-bold">NEW</span>
+            {% endif %}
+            {% if book.is_donated %}
+              <span class="badge bg-danger position-absolute top-0 start-0 m-2 fw-bold" title="Faculty Donated"><i class="bi bi-heart-fill"></i> GIFT</span>
+            {% endif %}
+          </div>
+          <div class="card-book-body">
+            <span class="badge bg-primary-subtle text-primary mb-1 align-self-start">{{ book.category.name|default:"General" }}</span>
+            <a href="{{ book.get_absolute_url }}" class="text-decoration-none">
+              <h6 class="book-card-title">{{ book.title }}</h6>
+            </a>
+            <div class="book-card-author"><i class="bi bi-pen me-1"></i>{{ book.author }}</div>
+            <div class="small text-muted mb-2">
+              {% if book.department %}<span class="badge bg-light text-dark border me-1">{{ book.department.code }}</span>{% endif %}
+              {% if book.publication_year %}{{ book.publication_year }}{% endif %}
+            </div>
+            {% if book.classification_number %}
+              <div class="small text-muted mb-2"><i class="bi bi-bookmark me-1"></i>Call: <code>{{ book.classification_number }}</code></div>
+            {% endif %}
+            <div class="book-card-meta">
+              {% if book.is_available %}
+                <span class="badge bg-success-subtle text-success"><i class="bi bi-check-circle-fill me-1"></i>{{ book.available_copies }} on shelf</span>
+              {% else %}
+                <span class="badge bg-danger-subtle text-danger">Issued Out</span>
+              {% endif %}
+              <a href="{{ book.get_absolute_url }}" class="text-primary text-decoration-none fw-semibold">View &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 py-5 text-center">
+        <div class="card border-0 shadow-sm p-5">
+          <i class="bi bi-journal-x text-muted" style="font-size: 3rem;"></i>
+          <h5 class="fw-bold mt-3">No Books Found Matching Your Criteria</h5>
+          <p class="text-muted">Try adjusting your search terms or clearing the selected department filter.</p>
+          <div>
+            <a href="{% url 'catalog:search' %}" class="btn btn-outline-primary">Reset Catalogue Search</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if page_obj.has_other_pages %}
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&department={{ selected_dept }}&category={{ selected_cat }}&sort={{ sort_by }}" aria-label="Previous">
+              &laquo; Previous
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo; Previous</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ num }}&q={{ query }}&department={{ selected_dept }}&category={{ selected_cat }}&sort={{ sort_by }}">{{ num }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&department={{ selected_dept }}&category={{ selected_cat }}&sort={{ sort_by }}" aria-label="Next">
+              Next &raquo;
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}
+

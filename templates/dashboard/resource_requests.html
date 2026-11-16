@@ -1,0 +1,96 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Manage Resource Requests | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Study Material & Paper Requests</h1>
+    <div class="text-muted small">Requests submitted by diploma students for specific past year papers, notes, or syllabi.</div>
+  </div>
+</div>
+
+<div class="card-data-table mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle small">
+      <thead class="table-light">
+        <tr>
+          <th>Requested Material</th>
+          <th>Type</th>
+          <th>Student / Faculty</th>
+          <th>Department</th>
+          <th>Details</th>
+          <th>Status</th>
+          <th class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for req in page_obj %}
+          <tr>
+            <td><strong>{{ req.subject_name }}</strong></td>
+            <td><span class="badge bg-secondary">{{ req.get_request_type_display }}</span></td>
+            <td>
+              <div>{{ req.requester_name }}</div>
+              <div class="text-muted small">{{ req.email }}</div>
+            </td>
+            <td>{{ req.department.code|default:"-" }}</td>
+            <td style="max-width: 250px;">{{ req.details|truncatewords:15 }}</td>
+            <td>
+              {% if req.status == 'PENDING' %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% elif req.status == 'FULFILLED' %}
+                <span class="badge bg-success">Fulfilled</span>
+              {% else %}
+                <span class="badge bg-secondary">Unavailable</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#reqModal{{ req.id }}">
+                Update
+              </button>
+            </td>
+          </tr>
+
+          <!-- Modal -->
+          <div class="modal fade" id="reqModal{{ req.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form action="{% url 'dashboard:request_update' pk=req.id %}" method="post">
+                  {% csrf_token %}
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Update Request #{{ req.id }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Request Status</label>
+                      <select name="status" class="form-select">
+                        <option value="PENDING" {% if req.status == 'PENDING' %}selected{% endif %}>Pending</option>
+                        <option value="FULFILLED" {% if req.status == 'FULFILLED' %}selected{% endif %}>Fulfilled / Uploaded</option>
+                        <option value="UNAVAILABLE" {% if req.status == 'UNAVAILABLE' %}selected{% endif %}>Unavailable</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Librarian Reply</label>
+                      <textarea name="librarian_reply" class="form-control" rows="3">{{ req.librarian_reply }}</textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold">Save Status</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        {% empty %}
+          <tr><td colspan="7" class="text-center py-4 text-muted">No material requests recorded yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

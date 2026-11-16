@@ -1,0 +1,101 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Book Purchase Recommendations | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-page-header">
+  <div>
+    <h1 class="dashboard-page-title">Book Purchase Recommendations</h1>
+    <div class="text-muted small">Review recommendations submitted by faculty and diploma students for committee review.</div>
+  </div>
+</div>
+
+<div class="card-data-table mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle small">
+      <thead class="table-light">
+        <tr>
+          <th>Recommended Book</th>
+          <th>Recommender</th>
+          <th>Department</th>
+          <th>Justification</th>
+          <th>Status</th>
+          <th class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rec in page_obj %}
+          <tr>
+            <td>
+              <div class="fw-bold text-dark">{{ rec.title }}</div>
+              <div class="text-muted small">by {{ rec.author }} {% if rec.publisher %}&bull; {{ rec.publisher }}{% endif %}</div>
+            </td>
+            <td>
+              <div>{{ rec.recommender_name }}</div>
+              <span class="badge bg-light text-dark border">{{ rec.get_recommender_role_display }}</span>
+            </td>
+            <td>{{ rec.department.code|default:"-" }}</td>
+            <td style="max-width: 250px;">{{ rec.reason|truncatewords:15 }}</td>
+            <td>
+              {% if rec.status == 'SUBMITTED' %}
+                <span class="badge bg-warning text-dark">Submitted</span>
+              {% elif rec.status == 'APPROVED' %}
+                <span class="badge bg-success">Approved</span>
+              {% elif rec.status == 'ACQUIRED' %}
+                <span class="badge bg-primary">Acquired</span>
+              {% else %}
+                <span class="badge bg-secondary">{{ rec.get_status_display }}</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#recModal{{ rec.id }}">
+                Review
+              </button>
+            </td>
+          </tr>
+
+          <!-- Modal for Review -->
+          <div class="modal fade" id="recModal{{ rec.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form action="{% url 'dashboard:recommendation_update' pk=rec.id %}" method="post">
+                  {% csrf_token %}
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Review: {{ rec.title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Procurement Status</label>
+                      <select name="status" class="form-select">
+                        <option value="SUBMITTED" {% if rec.status == 'SUBMITTED' %}selected{% endif %}>Submitted</option>
+                        <option value="UNDER_REVIEW" {% if rec.status == 'UNDER_REVIEW' %}selected{% endif %}>Under Committee Review</option>
+                        <option value="APPROVED" {% if rec.status == 'APPROVED' %}selected{% endif %}>Approved for Procurement</option>
+                        <option value="ACQUIRED" {% if rec.status == 'ACQUIRED' %}selected{% endif %}>Acquired in Library</option>
+                        <option value="REJECTED" {% if rec.status == 'REJECTED' %}selected{% endif %}>Rejected</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label small fw-bold">Librarian Notes</label>
+                      <textarea name="librarian_notes" class="form-control" rows="3">{{ rec.librarian_notes }}</textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold">Update Status</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        {% empty %}
+          <tr><td colspan="6" class="text-center py-4 text-muted">No book recommendations submitted yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

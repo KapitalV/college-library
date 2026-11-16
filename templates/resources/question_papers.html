@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}BTEUP Previous Year Question Papers | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'resources:resource_list' %}">Resources</a></li>
+      <li class="breadcrumb-item active" aria-current="page">BTEUP Question Papers</li>
+    </ol>
+  </nav>
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div class="section-header-academic mb-0">
+      <span class="badge-kicker"><i class="bi bi-journal-text me-1"></i> Examination Archive</span>
+      <h2>BTEUP Previous Year Question Papers</h2>
+      <p>Download official Board of Technical Education Uttar Pradesh semester examination papers for test preparation.</p>
+    </div>
+    <a href="{% url 'services:resource_request' %}" class="btn btn-outline-primary fw-semibold mt-2 mt-md-0">
+      <i class="bi bi-question-circle"></i> Request Missing Paper
+    </a>
+  </div>
+
+  <!-- Filter Card -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 mb-4 bg-white">
+    <form action="{% url 'resources:question_papers' %}" method="get" class="row g-3 align-items-end">
+      <div class="col-md-4">
+        <label for="filterDept" class="form-label small fw-bold text-muted">Department / Branch</label>
+        <select name="department" id="filterDept" class="form-select">
+          <option value="">All Engineering Branches</option>
+          {% for d in departments %}
+            <option value="{{ d.id }}" {% if selected_dept == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }} ({{ d.code }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="filterSem" class="form-label small fw-bold text-muted">Semester</label>
+        <select name="semester" id="filterSem" class="form-select">
+          <option value="">All Semesters</option>
+          {% for sem in semesters_range %}
+            <option value="{{ sem }}" {% if selected_semester == sem|stringformat:"s" %}selected{% endif %}>Semester {{ sem }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="filterYear" class="form-label small fw-bold text-muted">Examination Year</label>
+        <select name="year" id="filterYear" class="form-select">
+          <option value="">All Academic Years</option>
+          {% for yr in academic_years %}
+            <option value="{{ yr }}" {% if selected_year == yr %}selected{% endif %}>{{ yr }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary fw-semibold py-2">Filter Papers</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Papers Grid -->
+  <div class="row g-3 mb-4">
+    {% for paper in page_obj %}
+      <div class="col-md-6">
+        <div class="resource-tile h-100 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="resource-badge-format format-pdf"><i class="bi bi-file-earmark-pdf-fill me-1"></i>PDF PAPER</span>
+              <span class="badge bg-light text-dark border">{{ paper.academic_year|default:"Board Exam" }}</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-1">
+              <a href="{{ paper.get_absolute_url }}" class="text-dark text-decoration-none">{{ paper.title }}</a>
+            </h5>
+            <p class="small text-muted mb-3">{{ paper.description|truncatewords:20 }}</p>
+          </div>
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+            <span class="small text-secondary">
+              <i class="bi bi-building me-1"></i>{{ paper.department.code|default:"All Branches" }}
+              {% if paper.semester %} &bull; Sem {{ paper.semester }}{% endif %}
+            </span>
+            <div class="d-flex gap-2">
+              <a href="{{ paper.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">Details</a>
+              <a href="{% url 'resources:download' slug=paper.slug %}" class="btn btn-sm btn-danger fw-semibold" target="_blank">
+                <i class="bi bi-download me-1"></i> Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center py-5">
+        <div class="card border-0 shadow-sm p-5">
+          <i class="bi bi-file-earmark-x text-muted" style="font-size: 3rem;"></i>
+          <h5 class="fw-bold mt-3">No Question Papers Found</h5>
+          <p class="text-muted">Try selecting a different branch or semester, or submit a request to upload this paper.</p>
+          <div>
+            <a href="{% url 'services:resource_request' %}" class="btn btn-warning text-dark fw-bold">Request Paper Upload</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

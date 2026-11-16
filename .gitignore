@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+.env.local
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Static files cache
+staticfiles/
+
+# Archives & Temporary files
+*.zip
+*.tar.gz
+scratch_*.py
+test_carousel_*.py
+test_header_*.py
+update_subtitles.py
+reference_*.html
+reference_*.css
+reference_pages/
+screenshots/
+inspect_*.py
+check_*.py
+compare_*.py
+dump_*.py
+find_*.py
+parse_*.py
+read_more_*.py
+scrape_*.py
+capture_*.py
+fix_mmit_*.py
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,27 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Confirm Deletion | Librarian Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="row justify-content-center py-4">
+  <div class="col-md-7 col-lg-6">
+    <div class="card border-0 shadow-sm rounded-3 p-4 bg-white text-center">
+      <div class="text-danger mb-3 fs-1"><i class="bi bi-exclamation-triangle-fill"></i></div>
+      <h4 class="fw-bold text-dark mb-2">Confirm Record Deletion</h4>
+      <p class="text-secondary small mb-4">
+        Are you sure you want to permanently delete this <strong>{{ type }}</strong>?<br>
+        <code class="fs-6 mt-2 d-inline-block">{{ object }}</code>
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="d-flex justify-content-center gap-3">
+          <a href="javascript:history.back()" class="btn btn-outline-secondary px-4">Cancel</a>
+          <button type="submit" class="btn btn-danger fw-bold px-4">Yes, Delete Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}About Central Library | Government Polytechnic Madhogarh, Jalaun{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">About Library</li>
+    </ol>
+  </nav>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white mb-4">
+        <div class="section-header-academic mb-4">
+          <span class="badge-kicker"><i class="bi bi-building me-1"></i> Institutional Overview</span>
+          <h2>About Government Polytechnic Madhogarh Central Library</h2>
+          <p class="lead text-secondary">The academic and intellectual nerve center of Government Polytechnic Madhogarh, Kailor, District Jalaun (Uttar Pradesh).</p>
+        </div>
+
+        <div class="text-secondary" style="font-size: 1.02rem; line-height: 1.8;">
+          <p>
+            Welcome to the Central Library of <strong>Government Polytechnic Madhogarh, Jalaun</strong>. The library serves as the academic and information hub of the institution, catering to the knowledge, learning, curricula, and research needs of diploma scholars, faculty, and technical staff.
+          </p>
+          <p>
+            The library houses an extensive collection of technical textbooks, reference handbooks, previous year examination question papers, and national educational periodicals mapped strictly to the <strong>Board of Technical Education Uttar Pradesh (BTEUP)</strong> diploma curriculum for Computer Science & Engineering, Electrical Engineering, and Electronics Engineering.
+          </p>
+
+          <h5 class="fw-bold text-dark mt-4 mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Key Features & Infrastructure</h5>
+          <ul class="list-unstyled ps-2 mb-4">
+            <li class="mb-2"><i class="bi bi-arrow-right-circle text-primary me-2"></i><strong>Spacious Reading Hall:</strong> A well-ventilated and quiet reading area with comfortable, ergonomic seating arrangements designed for uninterrupted self-study.</li>
+            <li class="mb-2"><i class="bi bi-arrow-right-circle text-primary me-2"></i><strong>Library Automation & ERP:</strong> Integrated book catalogue (OPAC), campus ERP integration (erp.bizby.io), and NIC <strong>e-Granthalaya</strong> automation software.</li>
+            <li class="mb-2"><i class="bi bi-arrow-right-circle text-primary me-2"></i><strong>Curricula-Mapped Collection:</strong> Dedicated textbook racks covering Computer Science & Engineering (Branch 355/389), Electrical Engineering (Branch 328/378), and Electronics Engineering (Branch 330/380).</li>
+            <li class="mb-2"><i class="bi bi-arrow-right-circle text-primary me-2"></i><strong>Digital Integration:</strong> Direct access to digital e-books, the AICTE <strong>e-KUMBH portal</strong> (regional language technical books), <strong>National Digital Library of India (NDLI)</strong>, and <strong>SWAYAM / NPTEL</strong> e-learning resources.</li>
+          </ul>
+
+          <h5 class="fw-bold text-dark mt-4 mb-3"><i class="bi bi-clock-fill text-warning me-2"></i>Library Timings & Schedule</h5>
+          <div class="table-responsive mb-4">
+            <table class="table table-bordered table-sm small">
+              <thead class="table-light">
+                <tr>
+                  <th>Section / Day</th>
+                  <th>Opening Timings</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Monday to Saturday</strong></td>
+                  <td class="text-success fw-bold">10:00 AM – 05:00 PM</td>
+                  <td>Circulation desk, Stack room, Reference section</td>
+                </tr>
+                <tr>
+                  <td><strong>Reading Hall (Self-Study)</strong></td>
+                  <td class="text-primary fw-bold">09:30 AM – 05:30 PM</td>
+                  <td>Air-cooled quiet study area</td>
+                </tr>
+                <tr>
+                  <td><strong>Sunday & Gazetted Holidays</strong></td>
+                  <td class="text-danger fw-bold">Closed</td>
+                  <td>Digital Library portals remain accessible 24/7 online</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="col-lg-4">
+      <!-- Librarian Profile Card -->
+      {% if librarian %}
+        <div class="card border-0 shadow-sm rounded-3 p-4 bg-white mb-4 text-center">
+          <div class="mx-auto mb-3" style="width: 80px; height: 80px; background: var(--lib-teal-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--lib-teal);">
+            <i class="bi bi-person-badge"></i>
+          </div>
+          <h5 class="fw-bold text-dark mb-1">{{ librarian.name }}</h5>
+          <div class="text-secondary small mb-2">{{ librarian.designation }}</div>
+          <div class="badge bg-light text-dark border mb-3">{{ librarian.qualification }}</div>
+          <p class="small text-muted mb-3">{{ librarian.bio }}</p>
+          <div class="border-top pt-2 small text-muted">
+            {% if librarian.email %}<i class="bi bi-envelope me-1"></i>{{ librarian.email }}<br>{% endif %}
+            {% if librarian.phone %}<i class="bi bi-telephone me-1"></i>{{ librarian.phone }}{% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Facilities Highlights -->
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-light">
+        <h5 class="fw-bold text-dark mb-3">Institutional Links</h5>
+        <ul class="list-unstyled small text-secondary mb-0">
+          <li class="mb-2"><a href="{% url 'pages:vision_mission' %}" class="text-decoration-none"><i class="bi bi-chevron-right text-primary me-1"></i> Vision, Mission & Goals</a></li>
+          <li class="mb-2"><a href="{% url 'pages:rules' %}" class="text-decoration-none"><i class="bi bi-chevron-right text-primary me-1"></i> Rules & Circulation Policy</a></li>
+          <li class="mb-2"><a href="{% url 'pages:staff' %}" class="text-decoration-none"><i class="bi bi-chevron-right text-primary me-1"></i> Staff & Committee Directory</a></li>
+          <li class="mb-2"><a href="{% url 'pages:facilities' %}" class="text-decoration-none"><i class="bi bi-chevron-right text-primary me-1"></i> Library Facilities & Infrastructure</a></li>
+          <li><a href="{% url 'pages:faq' %}" class="text-decoration-none"><i class="bi bi-chevron-right text-primary me-1"></i> Frequently Asked Questions</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

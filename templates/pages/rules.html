@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Library Rules & Regulations | GP Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'pages:about' %}">About Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Rules & Regulations</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white mb-4">
+        <div class="section-header-academic mb-4">
+          <span class="badge-kicker"><i class="bi bi-shield-check me-1"></i> Institutional Code</span>
+          <h2>Library Rules & Regulations</h2>
+          <p>Guidelines to maintain a peaceful academic atmosphere, ensure equitable access, and protect institutional collection assets.</p>
+        </div>
+
+        <div class="mb-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="bi bi-1-circle-fill text-primary me-2"></i>General Conduct & Discipline</h5>
+          <ul class="list-group list-group-flush small text-secondary">
+            <li class="list-group-item px-0 py-2">
+              <strong>College Identity Card Mandatory:</strong> Entry to the library is allowed strictly upon presenting a valid, non-expired College Identity Card at the entrance counter.
+            </li>
+            <li class="list-group-item px-0 py-2">
+              <strong>Silence Discipline:</strong> Strict silence must be maintained in the reading hall and stack areas at all times. Group discussions, loud whispering, and loitering are strictly prohibited.
+            </li>
+            <li class="list-group-item px-0 py-2">
+              <strong>Mobile Phone Policy:</strong> Mobile phones must be kept on silent mode inside the library premises. Attending calls inside the reading hall is not permitted.
+            </li>
+            <li class="list-group-item px-0 py-2">
+              <strong>Property Counter:</strong> Personal textbooks, personal bags, umbrellas, and printed notes must be deposited at the property counter before entering.
+            </li>
+            <li class="list-group-item px-0 py-2">
+              <strong>Food & Beverage Prohibition:</strong> Food items, tea, coffee, and soft drinks are strictly prohibited inside the library premises.
+            </li>
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="bi bi-2-circle-fill text-primary me-2"></i>Circulation & Book Issue Policy</h5>
+          <div class="table-responsive">
+            <table class="table table-academic mb-0">
+              <thead>
+                <tr>
+                  <th>Reader Category</th>
+                  <th>Books Entitled</th>
+                  <th>Loan Period</th>
+                  <th>Renewal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Diploma Students</strong></td>
+                  <td>2 Books</td>
+                  <td>14 Days</td>
+                  <td>1 time (if not reserved)</td>
+                </tr>
+                <tr>
+                  <td><strong>Faculty / Teaching Staff</strong></td>
+                  <td>5 Books</td>
+                  <td>30 Days</td>
+                  <td>Semester duration upon request</td>
+                </tr>
+                <tr>
+                  <td><strong>Non-Teaching Staff</strong></td>
+                  <td>2 Books</td>
+                  <td>14 Days</td>
+                  <td>1 time</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="bi bi-3-circle-fill text-primary me-2"></i>Care of Books, Loss & Damage Terms</h5>
+          <ul class="list-group list-group-flush small text-secondary">
+            <li class="list-group-item px-0 py-2">
+              <strong>Care of Materials:</strong> Borrowers are strictly responsible for maintaining books in good physical condition. Underlining, highlighting, folding pages, scribbling, or tearing pages is an offense.
+            </li>
+            <li class="list-group-item px-0 py-2">
+              <strong>Lost or Damaged Volumes:</strong> In case of loss or severe damage to a book, the borrower must replace the book with its latest edition or deposit the cost as assessed under institutional rules.
+            </li>
+            <li class="list-group-item px-0 py-2">
+              <strong>Clearance (No-Dues):</strong> A formal No-Dues Clearance Certificate will be issued only after all borrowed materials are returned and all dues/fines are cleared.
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-3 bg-light rounded-3 d-flex justify-content-between align-items-center mt-4">
+          <span class="small text-muted"><i class="bi bi-info-circle me-1"></i> For special reference permissions, consult the Librarian.</span>
+          <button type="button" class="btn btn-outline-secondary btn-sm js-btn-print">
+            <i class="bi bi-printer me-1"></i> Print Rules
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact & Helpdesk | Government Polytechnic Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Contact Librarian</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-telephone-inbound-fill me-1"></i> Library Helpdesk</span>
+    <h2>Contact & Location Information</h2>
+    <p>Get in touch with the library officers for membership, reference assistance, or book acquisition enquiries.</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Contact Info Cards -->
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm rounded-3 p-4 mb-4">
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Campus Address</h5>
+        <p class="text-secondary mb-1 fw-semibold">{{ settings.college_name }}</p>
+        <p class="text-muted mb-3">{{ settings.campus_location }}, {{ settings.district }} - {{ settings.postal_code }}, Uttar Pradesh, India</p>
+
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-clock-history text-primary me-2"></i>Operating Hours</h5>
+        <div class="bg-light p-3 rounded-2 mb-3 small">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-semibold">Monday – Saturday:</span>
+            <span class="text-success fw-bold">10:00 AM – 05:00 PM</span>
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-semibold">Reading Hall Hours:</span>
+            <span class="text-primary fw-bold">09:30 AM – 05:30 PM</span>
+          </div>
+          <div class="d-flex justify-content-between text-danger">
+            <span class="fw-semibold">Sunday & Holidays:</span>
+            <span>Closed</span>
+          </div>
+        </div>
+
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-telephone-fill text-success me-2"></i>Helpline & Email</h5>
+        <ul class="list-unstyled text-secondary small mb-0">
+          <li class="mb-2"><strong>Library Phone:</strong> <a href="tel:{{ settings.contact_phone }}" class="text-decoration-none">{{ settings.contact_phone }}</a></li>
+          <li class="mb-2"><strong>Library Email:</strong> <a href="mailto:{{ settings.library_email }}" class="text-decoration-none">{{ settings.library_email }}</a></li>
+          <li class="mb-2"><strong>Principal's Office:</strong> <a href="mailto:{{ settings.principal_email }}" class="text-decoration-none">{{ settings.principal_email }}</a></li>
+          <li><strong>Official College Portal:</strong> <a href="{{ settings.college_website_url }}" target="_blank" class="text-decoration-none">{{ settings.college_website_url }}</a></li>
+        </ul>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-teal text-white" style="background-color: var(--lib-teal);">
+        <h5 class="fw-bold text-white mb-2"><i class="bi bi-chat-quote-fill me-2"></i>Have a Suggestion?</h5>
+        <p class="small text-white-50 mb-3">We appreciate constructive feedback from diploma students and faculty to improve library facilities and collection.</p>
+        <a href="{% url 'feedback:feedback' %}" class="btn btn-warning btn-sm fw-bold text-dark">Submit Feedback Form &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Map & Form shortcuts -->
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4">
+        <div class="card-header bg-navy text-white fw-semibold py-3" style="background-color: var(--lib-navy);">
+          <i class="bi bi-map-fill me-2"></i> Campus Location Map (Kailor, Madhogarh, District Jalaun)
+        </div>
+        <div class="card-body p-0">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114620.00000000000!2d79.1764!3d26.2736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3977ef0000000000%3A0x0!2sMadhogarh%2C%20Jalaun%2C%20Uttar%20Pradesh%20285126!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+            width="100%" 
+            height="350" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Government Polytechnic Madhogarh Campus Location Map">
+          </iframe>
+        </div>
+        <div class="card-footer bg-light p-3 small text-muted">
+          <i class="bi bi-info-circle me-1"></i> Located at Kailor, Madhogarh, District Jalaun, Uttar Pradesh – 285126.
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-3 p-4">
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-person-lines-fill text-primary me-2"></i>Officer In-Charge Contact</h5>
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary-subtle text-primary p-3 rounded-circle fs-3">
+            <i class="bi bi-person-badge"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold mb-1">Mrs. Priyanka Singh Dangi</h6>
+            <div class="text-secondary small mb-1">Librarian & In-Charge Central Library</div>
+            <div class="text-muted small">Central Library, Government Polytechnic Madhogarh, Jalaun</div>
+            <div class="mt-2">
+              <a href="mailto:{{ settings.library_email }}" class="btn btn-sm btn-outline-primary fw-semibold"><i class="bi bi-envelope"></i> Send Email</a>
+              <a href="tel:{{ settings.contact_phone }}" class="btn btn-sm btn-outline-success fw-semibold ms-1"><i class="bi bi-telephone"></i> Call Helpdesk</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

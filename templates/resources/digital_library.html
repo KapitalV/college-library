@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Digital Library & National E-Resources | Government Polytechnic Madhogarh Central Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-library">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}"><i class="bi bi-house-door"></i> Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Digital Library</li>
+    </ol>
+  </nav>
+
+  <div class="section-header-academic mb-4">
+    <span class="badge-kicker"><i class="bi bi-laptop me-1"></i> Digital Institutional Infrastructure</span>
+    <h2>Digital Library & Open Educational Resources (OER)</h2>
+    <p>Seamless 24/7 digital access to e-books, research databases, digitized learning portals, and national repositories.</p>
+  </div>
+
+  <!-- Hero Highlight for NDLI Club -->
+  <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 mb-5 text-white" style="background: linear-gradient(135deg, var(--lib-navy) 0%, var(--lib-teal) 100%);">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <span class="badge bg-warning text-dark fw-bold px-3 py-1 mb-2">INSTITUTIONAL PARTNERSHIP</span>
+        <h3 class="fw-bold mb-2">National Digital Library of India (NDLI) Club</h3>
+        <p class="text-white-50 lead fs-6 mb-4">
+          Government Polytechnic Madhogarh Central Library is an institutional partner with the NDLI Club under the Ministry of Education & IIT Kharagpur. Access 9+ crore digital textbooks, journals, and video courses.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="{% url 'services:ndli_club' %}" class="btn btn-warning fw-bold text-dark px-4 py-2">
+            <i class="bi bi-key-fill me-1"></i> NDLI Passkey & Registration Guide
+          </a>
+          <a href="{{ settings.ndli_portal_url|default:'https://ndl.iitkgp.ac.in/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light px-4 py-2">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Open NDLI Portal
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 text-center d-none d-lg-block">
+        <i class="bi bi-cloud-check-fill" style="font-size: 7rem; opacity: 0.85; color: var(--lib-gold);"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gateway Portals Grid -->
+  <h4 class="fw-bold text-dark mb-3"><i class="bi bi-grid-fill text-primary me-2"></i>Institutional & National Portals</h4>
+  <div class="row g-4 mb-5">
+    <!-- e-KUMBH -->
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <div class="portal-card-icon"><i class="bi bi-translate"></i></div>
+        <div>
+          <span class="badge bg-success-subtle text-success mb-2">Indian Languages</span>
+          <h5 class="fw-bold mb-1">AICTE e-KUMBH</h5>
+          <p class="small text-muted mb-3">Technical curriculum books translated into Hindi and regional Bharatiya languages for polytechnic diploma branches.</p>
+          <a href="{{ settings.ekumbh_url|default:'https://ekumbh.aicte-india.org/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary fw-semibold">Open e-KUMBH &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- e-Granthalaya -->
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <div class="portal-card-icon"><i class="bi bi-diagram-3"></i></div>
+        <div>
+          <span class="badge bg-primary-subtle text-primary mb-2">NIC Cloud</span>
+          <h5 class="fw-bold mb-1">e-Granthalaya 4.0</h5>
+          <p class="small text-muted mb-3">NIC's integrated cloud library platform powering union catalogs, digital accessioning, and OPAC search.</p>
+          <a href="{{ settings.egranthalaya_url|default:'http://eg4.nic.in/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary fw-semibold">Visit EG4 &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWAYAM / NPTEL -->
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <div class="portal-card-icon"><i class="bi bi-play-circle"></i></div>
+        <div>
+          <span class="badge bg-warning-subtle text-warning-emphasis mb-2">IIT Video Lectures</span>
+          <h5 class="fw-bold mb-1">SWAYAM / NPTEL</h5>
+          <p class="small text-muted mb-3">Online credit-transfer courses, lab simulations, and video lecture series across mechanical, civil, CS & electrical engineering.</p>
+          <a href="{{ settings.swayam_url|default:'https://swayam.gov.in/' }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary fw-semibold">Access MOOCs &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOAJ -->
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <div class="portal-card-icon"><i class="bi bi-journal-text"></i></div>
+        <div>
+          <span class="badge bg-info-subtle text-info mb-2">Open Access</span>
+          <h5 class="fw-bold mb-1">Directory of Open Access (DOAJ)</h5>
+          <p class="small text-muted mb-3">Peer-reviewed open access scientific journals and research literature freely downloadable for technical scholars.</p>
+          <a href="https://doaj.org/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary fw-semibold">Explore DOAJ &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Internal Digital E-Resources -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold text-dark mb-0"><i class="bi bi-file-earmark-pdf text-danger me-2"></i>Curated Digital Documents</h4>
+    <a href="{% url 'resources:resource_list' %}" class="btn btn-outline-primary btn-sm">View Full Directory &rarr;</a>
+  </div>
+  
+  <div class="row g-3">
+    {% for eb in ebooks %}
+      <div class="col-md-4">
+        <div class="resource-tile">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="resource-badge-format format-pdf">E-BOOK</span>
+            <span class="small text-muted">{{ eb.academic_year }}</span>
+          </div>
+          <h6 class="fw-bold mb-1"><a href="{{ eb.get_absolute_url }}" class="text-dark text-decoration-none">{{ eb.title }}</a></h6>
+          <p class="small text-muted mb-2">{{ eb.description|truncatewords:15 }}</p>
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+            <span class="small text-secondary">{{ eb.department.code|default:"General" }}</span>
+            <a href="{% url 'resources:download' slug=eb.slug %}" class="btn btn-sm btn-outline-primary" target="_blank">Access &rarr;</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 py-3">
+        <p class="text-muted">Digital e-books are accessible through the NDLI and e-KUMBH portals above.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
