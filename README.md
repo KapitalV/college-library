@@ -13,13 +13,19 @@
 
 This project is a complete, professional, production-ready **College Institutional Library Management and Digital Resource Portal** built with Python and Django for **Government Polytechnic Madhogarh**, Jalaun, Uttar Pradesh.
 
-It modernizes the reference library design patterns of `librarymmit.blogspot.com`, replacing fragmented external Google Drive folders, Google Sheet scripts, and static blog posts with a unified, high-performance, and secure institutional web application mapped strictly to BTEUP curricula and AICTE standards.
-
 ### Three Verified Active Engineering Departments
  (`gpmadhogarh.ac.in` and URISE code `3318`), the institution actively runs **three diploma branches**:
 1. **Computer Science and Engineering** (Branch Code: **355** | Lateral Entry Code: **389**)
 2. **Electrical Engineering** (Branch Code: **328** | Lateral Entry Code: **378**)
 3. **Electronics Engineering** (Branch Code: **330** | Lateral Entry Code: **380**)
+
+   
+© 2026 All Rights Reserved.
+
+**Developed & Maintained by KapitalV Group**
+Panki, Kanpur, Uttar Pradesh, India.
+
+Unauthorized copying, modification, or redistribution of this website is prohibited without prior permission from the website owner.
 
 
 
