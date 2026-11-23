@@ -7,7 +7,7 @@
 **Official College Portal:** https://gpmadhogarh.ac.in/  
 **Official URISE Profile:** https://urise.up.gov.in/poly/3318  
 
-**Framework:** Python 3.12+ / Django 5.x & 6.x / Bootstrap 5.3 / PostgreSQL & SQLite  
+**Framework:** Python 3.12+ / Django 5.x / Bootstrap 5.3 / PostgreSQL & SQLite  
 ---
 ##  Project Overview & Institutional Mission
 
@@ -23,6 +23,7 @@ This project is a complete, professional, production-ready **College Institution
 © 2026 All Rights Reserved.
 
 **Developed & Maintained by KapitalV Group**
+``
 Panki, Kanpur, Uttar Pradesh, India.
 
 Unauthorized copying, modification, or redistribution of this website is prohibited without prior permission from the website owner.
