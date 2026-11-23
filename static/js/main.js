@@ -49,7 +49,8 @@ function handleNdliBackdropClick(event) {
 function toggleMobileNav() {
   const navList = document.getElementById('mainNavbarList');
   if (navList) {
-    navList.classList.toggle('nav-open');
+    const open = navList.classList.toggle('nav-open');
+    document.querySelector('.nav-mobile-toggle').setAttribute('aria-expanded', String(open));
   }
 }
 
@@ -86,22 +87,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Pure CSS mobile submenu touch helper
-  const hasSubItems = document.querySelectorAll('.nav-bar li');
-  hasSubItems.forEach(function (li) {
+  // Separate disclosure buttons keep parent page links usable on touch screens.
+  const nav = document.getElementById('mainNavbarList');
+  const mobile = window.matchMedia('(max-width: 768px)');
+  document.querySelectorAll('#mainNavbarList > li').forEach(function (li, index) {
     const sub = li.querySelector('ul');
-    if (sub) {
-      const link = li.querySelector('a');
-      if (link && window.innerWidth <= 768) {
-        link.addEventListener('click', function (e) {
-          if (sub.style.display !== 'block') {
-            e.preventDefault();
-            sub.style.display = 'block';
-          } else {
-            sub.style.display = '';
-          }
-        });
-      }
+    if (!sub) return;
+    const link = li.querySelector('a');
+    sub.id = 'nav-submenu-' + index;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'nav-submenu-toggle';
+    button.textContent = '+';
+    button.setAttribute('aria-label', 'Toggle ' + link.textContent.replace('▼', '').trim() + ' submenu');
+    button.setAttribute('aria-controls', sub.id);
+    button.setAttribute('aria-expanded', 'false');
+    li.insertBefore(button, sub);
+    button.addEventListener('click', function () {
+      const open = li.classList.toggle('submenu-open');
+      button.setAttribute('aria-expanded', String(open));
+      button.textContent = open ? '−' : '+';
+    });
+  });
+  function resetNav() {
+    if (!nav) return;
+    nav.classList.remove('nav-open');
+    document.querySelector('.nav-mobile-toggle').setAttribute('aria-expanded', 'false');
+    nav.querySelectorAll('.submenu-open').forEach(li => li.classList.remove('submenu-open'));
+    nav.querySelectorAll('.nav-submenu-toggle').forEach(button => {
+      button.setAttribute('aria-expanded', 'false');
+      button.textContent = '+';
+    });
+  }
+  mobile.addEventListener('change', resetNav);
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && nav && nav.classList.contains('nav-open')) {
+      resetNav();
+      document.querySelector('.nav-mobile-toggle').focus();
     }
+  });
+  if (nav) nav.addEventListener('click', function (event) {
+    if (mobile.matches && event.target.closest('a')) resetNav();
+  });
+
+  // Keep wide data tables independently scrollable, with keyboard access.
+  document.querySelectorAll('.content-area table').forEach(function (table) {
+    if (table.closest('.table-responsive, .mobile-table-scroll')) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mobile-table-scroll';
+    wrapper.tabIndex = 0;
+    wrapper.setAttribute('role', 'region');
+    wrapper.setAttribute('aria-label', 'Scrollable data table');
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
   });
 });
