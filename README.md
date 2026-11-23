@@ -23,7 +23,8 @@ This project is a complete, professional, production-ready **College Institution
 © 2026 All Rights Reserved.
 
 **Developed & Maintained by KapitalV Group**
-``
+---
+
 Panki, Kanpur, Uttar Pradesh, India.
 
 Unauthorized copying, modification, or redistribution of this website is prohibited without prior permission from the website owner.
